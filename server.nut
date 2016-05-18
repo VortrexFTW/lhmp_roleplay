@@ -1,5 +1,5 @@
 // ================================================
-// == Life in Lost Heaven
+// == Reckless Gaming RP
 // == Created By: VortrexFTW
 // == Started On: December 31st 2015
 // ================================================
@@ -66,8 +66,8 @@ function onServerInit( ) {
     
     VehicleOwnerType <- { };
     VehicleOwnerType.None <- 0;
-    VehicleOwnerType.Player <- 0;
-    VehicleOwnerType.Faction <- 0;
+    VehicleOwnerType.Player <- 1;
+    VehicleOwnerType.Faction <- 2;
     
     VehicleSeatNames <- [ "Driver" , "Front Passenger" , "Rear Left Passenger" , "Rear Right Passenger" ];
     VehicleTireNames <- [ "Front Left" , "Front Right" , "Rear Left" , "Rear Right" ];
@@ -122,7 +122,7 @@ function onPlayerConnect( iPlayerID ) {
 
     local bAccountLoaded = loadPlayerFromDatabase( iPlayerID );
     
-    sendPlayerMessage( iPlayerID , Colours.Yellow + "Welcome to the Life in Lost Heaven roleplay server!" );
+    sendPlayerMessage( iPlayerID , Colours.Yellow + "Welcome to the Reckless Gaming LHMP server!" );
     
     if( bAccountLoaded ) {
         if( PlayerData[ iPlayerID ].iAccountSettings & AccountSettings.LoginByLastIP ) {
@@ -940,26 +940,26 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
                 case "vehicle":
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "== VEHICLE HELP ===================" );
                     sendPlayerMessage( iPlayerID , Colours.Gray75 + "Some vehicles are rentable. More information will be given when entering one." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray50 + "When entering a vehicle for sale, instructions will be given to you on how to buy it." );
+                    sendPlayerMessage( iPlayerID , Colours.White + "When entering a vehicle for sale, instructions will be given to you on how to buy it." );
                     sendPlayerMessage( iPlayerID , Colours.Gray75 + "Don't forget to register your vehicle at the Department of Motor Vehicle building!" );
-                    sendPlayerMessage( iPlayerID , Colours.Gray50 + "You will need a driver's license to legally drive a motor vehicle in Lost Heaven." );
+                    sendPlayerMessage( iPlayerID , Colours.White + "You will need a driver's license to legally drive a motor vehicle in Lost Heaven." );
                     sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /siren, /roof, /radio" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
                     break;
                     
                 case "account":
-                    sendPlayerMessage( iPlayerID , Colours.Cyan + "== VEHICLE HELP ===================" );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /iplogin" );
+                    sendPlayerMessage( iPlayerID , Colours.Cyan + "== ACCOUNT HELP ===================" );
+                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /login /iplogin" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
-                    break;
+                    break;				
                     
                 case "roleplay":
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "== ROLEPLAY HELP ==================" );
                     sendPlayerMessage( iPlayerID , Colours.Gray75 + "This server is built on a light RP standard." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray50 + "Do not mix OOC and IC chats. Exceptions can be made for new players." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray50 + "Please don't powergame. Powergaming is forcing somebody to RP or acting unnatural." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray50 + "If you have any questions about roleplaying, please contact an admin. Use /admins." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray50 + "- Available commands: /shout, /me, /b" );
+                    sendPlayerMessage( iPlayerID , Colours.White + "Do not mix OOC and IC chats. Exceptions can be made for new players." );
+                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "Please don't powergame. Powergaming is forcing somebody to RP or acting unnatural." );
+                    sendPlayerMessage( iPlayerID , Colours.White + "If you have any questions about roleplaying, please contact an admin. Use /admins." );
+                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /shout, /me, /b, /do" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
                     break; 
 
@@ -1592,30 +1592,31 @@ function loginSuccess( iPlayerID ) {
 function checkSpawnRestoreCooldown( ) {
     for( local i = 0 ; i < serverGetMaxPlayers( ) ; i++ ) {
         if( playerIsConnected( i ) ) {
-            if( !PlayerData[ i ].bSpawned ) {
-                checkPlayerSpawnRestoreCooldown( i );
-            }
+			if( PlayerData[ i ].bLoggedIn ) {
+				if( !PlayerData[ i ].bSpawned ) {
+					checkPlayerSpawnRestoreCooldown( i );
+				}
+			}
         }
     }
 }
 
 function checkPlayerSpawnRestoreCooldown( iPlayerID ) {
-    //local iTimeLeft = ( ServerSecondTicks - PlayerData[ iPlayerID ].iSpawnWaitTick );
-    local iSecondsLeft = abs( ( PlayerData[ iPlayerID ].iSpawnWaitTick + ( GlobalConfig.iSpawnTickWait ) ) - ServerSecondTicks );
-    
-    if( iSecondsLeft > 0 ) {
-        playerMessageAlert( iPlayerID , "Your spawn position will be restored in " + getSecondsText( iSecondsLeft )  );
-        return 1;r
-    }
-    
-    playerRestoreSavedPosition( iPlayerID );
-    playerRestoreSavedRotation( iPlayerID );
-    playerRestoreSavedSkin( iPlayerID );
-    playerRestoreSavedWeapons( iPlayerID );
-    playerRestoreSavedMoney( iPlayerID );
-    playerLockControls( iPlayerID , false );
-    PlayerData[ iPlayerID ].iSpawnWaitTick <- 0;
-    PlayerData[ iPlayerID ].bSpawned <- true;
+	local iSecondsLeft = abs( ( PlayerData[ iPlayerID ].iSpawnWaitTick + ( GlobalConfig.iSpawnTickWait ) ) - ServerSecondTicks );
+	
+	if( iSecondsLeft > 0 ) {
+		playerMessageAlert( iPlayerID , "Your spawn position will be restored in " + getSecondsText( iSecondsLeft )  );
+		return 1;
+	}
+	
+	playerRestoreSavedPosition( iPlayerID );
+	playerRestoreSavedRotation( iPlayerID );
+	playerRestoreSavedSkin( iPlayerID );
+	playerRestoreSavedWeapons( iPlayerID );
+	playerRestoreSavedMoney( iPlayerID );
+	playerLockControls( iPlayerID , false );
+	PlayerData[ iPlayerID ].iSpawnWaitTick <- 0;
+	PlayerData[ iPlayerID ].bSpawned <- true;		
 }
 
 function getSecondsText( iSeconds ) {
