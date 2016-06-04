@@ -5,18 +5,16 @@
 // ================================================
 
 function onServerInit( ) {
-    ServerTicks <- 0;
-    ServerSecondTicks <- 0;
+    iServerTicks <- 0;
+    iServerSecondTicks <- 0;
     
-    LastServerSaveTick <- 0;
+    iLastServerSaveTick <- 0;
 
     GlobalConfig <- { };
     GlobalConfig.VehicleSpawn <- { };
     GlobalConfig.NewCharacter <- { };
 
     GlobalConfig.iMaxVehicles <- 250;
-    
-    GlobalConfig.ServerSaveInterval <- 600;
 
     PedSkins <- { };
     PedSkins.Detectives <- [ 52 , 53 , 54 ];
@@ -30,19 +28,19 @@ function onServerInit( ) {
 
     StaffFlags <- createBitwiseTable( [ "None" , "BasicModeration" , "ManageBans" , "ManageVehicles" , "Scripter" , "Owner" ] );
     AccountSettings <- createBitwiseTable( [ "None" , "Force2StepAuth" , "LoginByLastIP" , "UseWhitelist" , "UseBlacklist" ] );
-    GameSettings <- createBitwiseTable( [ "None" , "AutoSirenOff" ] );    
+    GameSettings <- createBitwiseTable( [ "None" , "AutoSirenOff" ] );
     
     GlobalConfig.NewCharacter.iSkin <- 3;
-    GlobalConfig.NewCharacter.fSpawnX <- 0.0;
-    GlobalConfig.NewCharacter.fSpawnY <- 0.0;
-    GlobalConfig.NewCharacter.fSpawnZ <- 0.0;
+    GlobalConfig.NewCharacter.fSpawnX <- -1969.19;
+    GlobalConfig.NewCharacter.fSpawnY <- -4.79503;
+    GlobalConfig.NewCharacter.fSpawnZ <- 19.6773;
     GlobalConfig.NewCharacter.iMoney <- 100;
     GlobalConfig.NewCharacter.iAccountSettings <- AccountSettings.None;
     GlobalConfig.NewCharacter.iStaffFlags <- StaffFlags.None;
     GlobalConfig.NewCharacter.iGameSettings <- GameSettings.None;
     
     GlobalConfig.iVehRentStartWait <- 5;
-    GlobalConfig.ServerSaveInterval <- 300;
+    GlobalConfig.iServerSaveInterval <- 300;
     GlobalConfig.iSpawnTickWait <- 5;
 
     CardinalDirections <- [ "North" , "Northeast" , "East" , "Southeast" , "South" , "Southwest" , "West" , "Northwest" , "Unknown" ];
@@ -97,15 +95,15 @@ function onServerInit( ) {
     Sounds <- { };
     Sounds.KillShout <- [ "00940001" , "01010080" , "01940012" , "01940017" , "01940069" , "01940074" , "01990141" , "01990361" , "01990421" , "01990831" , "01990861" , "02010040" , "02010110" , "02940010" , "02940014" , "0294022" , "02940028" , "00940105" , "00940092" , "00940080" , "00940077" , "00940069" , "00940129" , "00940133" , "00940134" , "00950001" , "00950004" , "00950008" , "00950011" , "00950013" , "00950014" , "00950020" , "00950026" , "00950027" , "00950031" , "00950032" , "00950034" , "00950035" , "00950039" , "00950049" , "00950051" , "00950056" , "00950059" , "00950071" , "00950072" , "00950089" , "00950095" , "00950096" , "00950110" , "00950151" , "00950154" , "00950188" , "00950189" , "00950200" , "00950204" , "00950218" , "00950249" , "01010140" , "01940007" , "01940012" , "01940016" , "01940011" , "01940019" , "01940027" , "01940069" , "01940070" , "01940071" , "01940072" , "01940075" , "01940077" , "01940079" , "01940081" , "01940082" , "01940083" , "01940089" , "01940090" , "01940091" , "01990071" , "01990081" , "01990111" , "01990131" , "01990151" , "01990171" , "01990181" , "01990231" , "01990511" , "01990521" , "01990641" , "01990841" , "01990861" , "01990871" , "02010050" , "02940019" , "02940022" , "02940027" , "02940030" , "02940040" , "02940082" , "02940096" , "02950004" , "02950005" , "02950010" , "02950011" , "02950012" , "02950024" , "02950064" , "02950115" , "03030010" , "03030030" , "03030050" , "03940010" , "03940041" , "03940060" , "03940065" , "04040025" , "04040030" , "04040050" , "04940010" , "04940018" , "04940025" , "04940027" , "05010190" , "05010350" , "05030080" , "05940002" , "05940015" , "05940033" , "05940095" , "05990051" , "19990502" , "19990632" , "20010140" , "21940004" , "21940003" , "21940005" , "21940006" , "21940007" , "21940008" , "21940009" , "21940012" , "21940021" , "21940055" , "21940079" , "21940022" , "23940023" , "23940022" , "23940021" , "23940020" , "23940004" , "23940001" , "23940026" , "23940027" , "23940036" , "23940044" , "23940046" , "23940048" , "23940050" , "23940051" , "23940069" , "23940072" , "23940078" , "23940091" , "24940026" , "2590023 " , "25940045" , "28940059" , "30940048" , "30940048" , "28940004" , "27940024" , "27940011" , "25940038" , "25940026" , "25940024" , "25940023" , "25940021" , "25940002" , "24940063" , "21940081" , "20020450" , "20020160" , "19992011" , "19991512" , "19991255" , "19990351" , "19950110" , "19950060" , "19950040" , "18020420" , "18020360" , "17990421" , "17040550" , "15990212" , "15990084" , "15100010" , "15090070" , "15070080" , "15050021" , "14990251" , "14010460" , "14000220" , "14000120" , "13990071" , "12940059" , "12940039" , "11990763" , "11940083" , "11940040" , "08990041" , "08060130" , "07990231" , "07990161" , "07010240" , "15990801" , "15990881" , "16010040" , "16010090" , "16010100" , "17040020" , "17040461" , "17940058" , "17990051" , "18940059" , "18940052" , "18020301" , "16030060" , "15991621" , "15990211" , "15060030" , "15050004" , "15030130" , "14040050" , "14010560" , "14000250" , "14000230" , "12940086" , "12940039" , "12940006" , "12010140" , "10990672" , "09050210" , "09050190" , "08990151" , "08950015" , "08950017" , "08950013" , "09840008" , "08020010" , "07990415" , "07990371" , "07990224" , "07940029" , "07020190" , "05940026" , "04940058" , "04940039" , "04060050" , "03940079" , "28940001" , "28940002" , "28940003" , "28940004" , "28940005" , "28940006" , "28940007" , "28940008" , "28940009" , "28940010" , "28940011" , "28940012" , "28940013" , "28940014" , "28940015" , "28940016" , "28940017" , "28940018" , "28940019" , "28940020" , "28940021" , "28940022" , "28940023" , "28940025" , "28940026" , "28940027" , "28940028" , "28940029" , "28940030" , "28940031" , "28940032" , "28940033" , "28940034" , "28940035" , "28940036" , "28940037" , "28940038" , "28940039" , "28940040" , "28940041" , "28940042" , "28940043" , "28940044" , "28940045" , "28940046" , "28940047" , "28940048" , "28940049" , "28940042" , "28940043" , "28940044" , "28940045" , "28940046" , "28940047" , "28940048" , "28940049" ];
 
-	serverSetGamemodeName( "Roleplay" );
+    serverSetGamemodeName( "Roleplay" );
     
     loadGlobalConfig( );
     
     loadVehiclesFromDatabase( );
-	
-	resyncIndexIniFile( );
     
-    serverSetDefaultMap( "FREERIDENOC" );
+    resyncIndexIniFile( );
+    
+    serverSetDefaultMap( "FREERIDE" );
 }
 
 function onPickupTaken( iPickupID , iPlayerID ) { 
@@ -116,13 +114,13 @@ function onPlayerConnect( iPlayerID ) {
     print( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] connected to the server." );
     
     //OnlinePlayers[ iPlayerID ] <- iPlayerID;
-	playerToggleCityMusic( iPlayerID , 0 );
+    playerToggleCityMusic( iPlayerID , 0 );
     
     createPlayerDataSlot( iPlayerID );
 
     local bAccountLoaded = loadPlayerFromDatabase( iPlayerID );
     
-    sendPlayerMessage( iPlayerID , Colours.Yellow + "Welcome to the Reckless Gaming LHMP server!" );
+    sendPlayerMessage( iPlayerID , Colours.Yellow + "Welcome to the " + GlobalConfig.szServerName + " server!" );
     
     if( bAccountLoaded ) {
         if( PlayerData[ iPlayerID ].iAccountSettings & AccountSettings.LoginByLastIP ) {
@@ -152,7 +150,7 @@ function onPlayerSpawn( iPlayerID ) {
         playerChangeSkin( iPlayerID , PlayerData[ iPlayerID ].iSkinID );
     }
     
-	print( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] spawned.");
+    print( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] spawned.");
 }
 
 function onPlayerDisconnect( iPlayerID ) {
@@ -171,11 +169,11 @@ function onPlayerDisconnect( iPlayerID ) {
     
     deletePlayerDataSlot( iPlayerID );
     
-	print("Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] disconnected from the server.");
+    print("Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] disconnected from the server.");
 }
 
 function onPlayerText( iPlayerID , szMessage ) {
-	print( "[" + playerGetName( iPlayerID ) + "] sent message: " + szMessage);	
+    print( "[" + playerGetName( iPlayerID ) + "] sent message: " + szMessage);    
     
     if( PlayerData[ iPlayerID ].bMuted ) {
         messagePlayerError( iPlayerID , "You are muted, and cannot use any chat" );
@@ -183,18 +181,18 @@ function onPlayerText( iPlayerID , szMessage ) {
         sendAllMessage( Colours.Orange + "<" + playerGetName( iPlayerID ) + "> " + Colours.White + szMessage);
     }
     
-	return false;
+    return false;
 }
 
 function onServerTickSecond( iTicks ) {
-    ServerSecondTicks++;
+    iServerSecondTicks++;
     
     checkServerSaveCooldown( );
     checkSpawnRestoreCooldown( );
 }
 
 function onServerTick( iTicks ) {
-    ServerTicks++;
+    iServerTicks++;
 }
 
 function onPlayerShoot( iPlayerID , iWeaponID ) {
@@ -206,7 +204,7 @@ function onPlayerThrowGranade( iPlayerID , iWeaponID ) {
 }
 
 function onPlayerEnterVehicle( iPlayerID , iVehicleID , iSeatID ) {
-	playerToggleCityMusic( iPlayerID , VehicleData[ iVehicleID ].iRadioID );
+    playerToggleCityMusic( iPlayerID , VehicleData[ iVehicleID ].iRadioID );
     playerMessageAlert( iPlayerID , "You entered vehicle " + iVehicleID + " in the " + VehicleSeatNames[ iSeatID ] + " seat." );
     
     if( iSeatID == 0 ) {
@@ -228,7 +226,7 @@ function onPlayerEnterVehicle( iPlayerID , iVehicleID , iSeatID ) {
 }
 
 function onPlayerExitVehicle( iPlayerID , iVehicleID ) {
-	playerToggleCityMusic( iPlayerID , 0 );
+    playerToggleCityMusic( iPlayerID , 0 );
     
     if( PlayerData[ iPlayerID ].iGameSettings & GameSettings.AutoSirenOff ) {
         vehicleToggleSiren( iVehicleID , false );
@@ -247,28 +245,23 @@ function onPlayerExitVehicle( iPlayerID , iVehicleID ) {
     
     PlayerData[ iPlayerID ].iVehRentStart <- 0;
     
-	print( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] exited vehicle " + iVehicleID );
+    print( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] exited vehicle " + iVehicleID );
 }
 
 function onPlayerIsKilled( iPlayerID , iKillerID , iReasonID , iBodyPartID ) {
-	if( PlayerData[ iPlayerID ].bSpawned ) {
+    if( PlayerData[ iPlayerID ].bSpawned ) {
         PlayerData[ iPlayerID ].bIsDead <- true;
     }
     
     if( iPlayerID != iKillerID ){
-		sendAllMessage( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] was killed by " + playerGetName( iKillerID ) + "[" + iKillerID + "] (Reason: " + iReasonID + " / Part: " + BodyParts[ iBodyPartID ] + "[" + iBodyPartID + "])");
-	} else {
-		sendAllMessage( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] died. (Reason: " + iReasonID + " / Part: " + iBodyPartID + ")" );
-	}
+        sendAllMessage( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] was killed by " + playerGetName( iKillerID ) + "[" + iKillerID + "] (Reason: " + iReasonID + " / Part: " + BodyParts[ iBodyPartID ] + "[" + iBodyPartID + "])");
+    } else {
+        sendAllMessage( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] died. (Reason: " + iReasonID + " / Part: " + iBodyPartID + ")" );
+    }
 }
 
 function onPlayerKeyPressed( iPlayerID , iKeyID ) {
-    /*
-	if( iKeyID == KEY_A)
-	{
-		print( "KEY_A pressed" );
-	}
-    */
+
 }
 
 function onPlayerCommand( iPlayerID , szCommand , szParams ) {
@@ -282,7 +275,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
         return 1;
     }
     
-	switch( szCommand.tolower( ) ) {
+    switch( szCommand.tolower( ) ) {
         case "login":
             if( szParams.len( ) == 0 ) {
                 playerMessageSyntax( iPlayerID , "/login <password>" );    
@@ -293,6 +286,11 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             
             if( !isPlayerRegistered( iPlayerID ) ) {
                 playerMessageError( iPlayerID , "You are not registered! Use /register" ); 
+                return 1;
+            }
+            
+            if( PlayerData[ iPlayerID ].bLoggedIn ) {
+                playerMessageError( iPlayerID , "You are already logged in!" ); 
                 return 1;
             }
             
@@ -325,6 +323,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             }
             
             PlayerData[ iPlayerID ].szPassword <- szPassword;
+            PlayerData[ iPlayerID ].bNewlyRegistered <- true;
             
             addPlayerToDatabase( iPlayerID );
             
@@ -365,7 +364,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             playerMessageSuccess( iPlayerID , "Code Executed! Code: " + szParams );
             break;
             
-		case "addcar":
+        case "addcar":
             if( szParams.len( ) == 0 ) {
                 playerMessageSyntax( iPlayerID , "/addcar <model id>" );    
                 return 1;
@@ -418,7 +417,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             //addVehicleToDatabase( iPlayerID );
             break;
             
-		case "delcar":
+        case "delcar":
             if( szParams.len( ) == 0 ) {
                 playerMessageSyntax( iPlayerID , "/delcar <model id>" );
                 return 1;
@@ -436,7 +435,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             break;
             
         /*
-		case "delallcars":
+        case "delallcars":
             for( local i = 0 ; i < GlobalConfig.iMaxVehicles ; i++ ) {
                 if( vehicleExists( i ) ) {
                     vehicleDelete( i );
@@ -530,6 +529,16 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             playerMessageSuccess( iPlayerID , "You kicked " + playerGetName( iTargetID ) + " for: " + szReason );
             consoleMessage( getPlayerNameAndID( iPlayerID ) + " has kicked " + getPlayerNameAndID( iTargetID ) + " for: " + szReason );
             playerKick( iTargetID );
+            break;
+            
+        case "mypos":
+            local fMyPos = playerGetPosition( iPlayerID );
+            print( getPlayerNameAndID( iPlayerID ) + "'s current position: " + fMyPos[ 0 ] + " , " + fMyPos[ 1 ] + " , " + fMyPos[ 2 ] );
+            break;
+            
+        case "gotopos": 
+            local szSplit = split( szParams , " , " );
+            playerSetPosition( iPlayerID , szSplit[ 0 ].tofloat( ) ,  szSplit[ 1 ].tofloat( ) ,  szSplit[ 2 ].tofloat( ) );
             break;
             
         case "setstafftitle":   
@@ -776,11 +785,13 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
                 VehicleData[ iVehicleID ].iRadioID <- 0;
                 szPassengerMessage = Colours.White + playerGetName( iPlayerID ) + " has turned off the radio";
                 playerMessageSuccess( iPlayerID , "You have turned off the radio for vehicle " + iVehicleID );
+                playerMessageAlert( iPlayerID , "You may need to get out of the vehicle and get back in to stop the radio." );
                 consoleMessage( getPlayerNameAndID( iPlayerID ) + " has turned off the radio for vehicle + " + iVehicleID );
             } else {
                 VehicleData[ iVehicleID ].iRadioID <- 1;
                 playerMessageSuccess( iPlayerID , "You have turned on the radio for vehicle " + iVehicleID );            
                 szPassengerMessage = Colours.White + playerGetName( iPlayerID ) + " has turned on the radio";
+                playerMessageAlert( iPlayerID , "You may need to get out of the vehicle and get back in to play the radio." );
                 consoleMessage( getPlayerNameAndID( iPlayerID ) + " has turned on the radio for vehicle + " + iVehicleID );
             }
             
@@ -939,27 +950,27 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             switch( szParams.tolower( ) ) {
                 case "vehicle":
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "== VEHICLE HELP ===================" );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "Some vehicles are rentable. More information will be given when entering one." );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "Some vehicles are rentable. More information will be given when entering one." );
                     sendPlayerMessage( iPlayerID , Colours.White + "When entering a vehicle for sale, instructions will be given to you on how to buy it." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "Don't forget to register your vehicle at the Department of Motor Vehicle building!" );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "Don't forget to register your vehicle at the Department of Motor Vehicles building!" );
                     sendPlayerMessage( iPlayerID , Colours.White + "You will need a driver's license to legally drive a motor vehicle in Lost Heaven." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /siren, /roof, /radio" );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "- Available commands: /siren, /roof, /radio" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
                     break;
                     
                 case "account":
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "== ACCOUNT HELP ===================" );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /login /iplogin" );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "- Available commands: /login /iplogin" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
-                    break;				
+                    break;                
                     
                 case "roleplay":
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "== ROLEPLAY HELP ==================" );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "This server is built on a light RP standard." );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "This server is built on a light RP standard." );
                     sendPlayerMessage( iPlayerID , Colours.White + "Do not mix OOC and IC chats. Exceptions can be made for new players." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "Please don't powergame. Powergaming is forcing somebody to RP or acting unnatural." );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "Please don't powergame. Powergaming is forcing somebody to RP or acting unnatural." );
                     sendPlayerMessage( iPlayerID , Colours.White + "If you have any questions about roleplaying, please contact an admin. Use /admins." );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Available commands: /shout, /me, /b, /do" );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "- Available commands: /shout, /me, /b, /do" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
                     break; 
 
@@ -970,7 +981,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
                     }
                     
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "== ADMIN HELP =====================" );
-                    sendPlayerMessage( iPlayerID , Colours.Gray75 + "- Coming soon!" );
+                    sendPlayerMessage( iPlayerID , Colours.Gray25 + "- Coming soon!" );
                     sendPlayerMessage( iPlayerID , Colours.Cyan + "===================================" );
                     break;                    
                 
@@ -981,23 +992,27 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             break;
             
         default:
-            playerMessageError( iPlayerID , "You entered an invalid command" );
+            playerMessageError( iPlayerID , "You entered an invalid command! Use /help for a list!" );
             break;
     }
 }
 
 function getPosInFrontOfPos( fX , fY , fZ , fAngle , fDistance ) {
-	fAngle = fAngle * PI / 180;	
-	local fX2 = ( fX + ( ( cos( -fAngle + ( PI / 2 ) ) ) * fDistance ) );
-	local fZ2 = ( fZ + ( ( sin( -fAngle + ( PI / 2 ) ) ) * fDistance ) );
-	return [ fX2 , fY , fZ2 ];
+    fAngle = degreesToRadians( fAngle );
+    
+    local fX2 = ( fX + ( ( cos( -fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    local fZ2 = ( fZ + ( ( sin( -fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    
+    return [ fX2 , fY , fZ2 ];
 }
 
 function getPosBehindPos( fX , fY , fZ , fAngle , fDistance ) {
-	fAngle = fAngle * PI / 180;	
-	local fX2 = ( fX + ( ( cos( fAngle + ( PI / 2 ) ) ) * fDistance ) );
-	local fZ2 = ( fZ + ( ( sin( fAngle + ( PI / 2 ) ) ) * fDistance ) );
-	return [ fX2 , fY , fZ2 ];
+    fAngle = degreesToRadians( fAngle );
+    
+    local fX2 = ( fX + ( ( cos( fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    local fZ2 = ( fZ + ( ( sin( fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    
+    return [ fX2 , fY , fZ2 ];
 }
 
 function getPosInFrontOfPlayer( iPlayerID , fDistance ) {
@@ -1015,11 +1030,11 @@ function getPosBehindPlayer( iPlayerID , fDistance ) {
 }
 
 function getPosAbovePos( fX , fY , fZ , fHeight = 0.0 ) {
-	return [ fX , fY-height , fZ ];
+    return [ fX , fY-height , fZ ];
 }
 
 function getPosBelowPos( fX , fY , fZ , fHeight = 0.0 ) {
-	return [ fX , fY-height , fZ ];
+    return [ fX , fY-height , fZ ];
 }
 
 function getPosAbovePlayer( iPlayerID , fDistance ) {
@@ -1037,109 +1052,79 @@ function getPosBelowPlayer( iPlayerID , fDistance ) {
 }
 
 function getOffsetFromPos( fX1 , fY1 , fZ1 , fX2 = 0.0 , fY2 = 0.0 , fZ2 = 0.0 ) {
-	return [ fX1 + fX2 , fY1 + fY2 , fZ1 + fZ2 ];
+    return [ fX1 + fX2 , fY1 + fY2 , fZ1 + fZ2 ];
 }
 
-function getCardinalDirectionText( iDirectionID ) {	
-	return CardinalDirections[ iDirectionID ];
+function getCardinalDirectionText( iDirectionID ) {    
+    return CardinalDirections[ iDirectionID ];
 }
 
 function getCardinalDirection( fX1 , fZ1 , fX2 , fZ2 ) {
-	local a = fX1 - fX2;
-	local b = fZ1 - fZ2;
-	local x = abs( a );
-	local y = abs( b );
-	
-	local no = 0;
-	local ne = 1;
-	local ea = 2;
-	local se = 3;
-	local so = 4;
-	local sw = 5;
-	local we = 6;
-	local nw = 7;
-	local na = 8; // Unknown (not available)
-	
-	if( b < 0 && a < 0 )
-	{
-		if( x < ( y / 2 ) )
-		{
-			return no;
-		}
-		else if( y < ( x / 2 ) )
-		{
-			return east;
-		}
-		else
-		{
-			return ne;
-		}
-	}
-	else if( b < 0 && a >= 0 )
-	{
-		if( x < ( y / 2 ) )
-		{
-			return no;
-		}
-		else if( y < ( x / 2 ) )
-		{
-			return we;
-		}
-		else
-		{
-			return nw;
-		}
-	}
-	else if( b >= 0 && a >= 0 )
-	{
-		if( x < ( y / 2 ) )
-		{
-			return so;
-		}
-		else if( y < ( x / 2 ) )
-		{
-			return w;
-		}
-		else 
-		{
-			return sw;
-		}
-		end
-	}
-	else if( b >= 0 && a < 0 )
-	{
-		if( x < ( y / 2 ) )
-		{
-			return s;
-		}
-		else if( y < ( x / 2 ) )
-		{
-			return e;
-		}
-		else
-		{
-			return se;
-		}
-	}
-	else
-	{
-		return na;
-	}
+    local a = fX1 - fX2;
+    local b = fZ1 - fZ2;
+    local x = abs( a );
+    local y = abs( b );
+    
+    local no = 0;
+    local ne = 1;
+    local ea = 2;
+    local se = 3;
+    local so = 4;
+    local sw = 5;
+    local we = 6;
+    local nw = 7;
+    local na = 8; // Unknown (not available)
+    
+    if( b < 0 && a < 0 ) {
+        if( x < ( y / 2 ) ) {
+            return no;
+        } else if( y < ( x / 2 ) ) {
+            return east;
+        } else {
+            return ne;
+        }
+    } else if( b < 0 && a >= 0 ) {
+        if( x < ( y / 2 ) ) {
+            return no;
+        } else if( y < ( x / 2 ) ) {
+            return we;
+        } else {
+            return nw;
+        }
+    } else if( b >= 0 && a >= 0 ) {
+        if( x < ( y / 2 ) ) {
+            return so;
+        } else if( y < ( x / 2 ) ) {
+            return w;
+        } else {
+            return sw;
+        }
+    } else if( b >= 0 && a < 0 ) {
+        if( x < ( y / 2 ) ) {
+            return s;
+        } else if( y < ( x / 2 ) ) {
+            return e;
+        } else {
+            return se;
+        }
+    } else {
+        return na;
+    }
 }
 
 function degreesToRadians( fDegrees ) {
-	return fDegrees * ( PI / 180 );
+    return fDegrees * ( PI / 180 );
 }
 
 function radiansToDegrees( fRadians ) {
-	return fRadians * ( 180 / PI );
+    return fRadians * ( 180 / PI );
 }
 
 function isValidVehicleModelID( iModelID ) {
     if( iModelID < 169 ) {
         return true;
     }
-	
+    
     return false;
 }
 
@@ -1157,8 +1142,8 @@ function canPlayerUseCommand( iPlayerID , szCommand ) {
     }
     
     if( PlayerData[ iPlayerID ].bLoggedIn ) {
-		local szRequiredFlags = iniGetParam( "data\\commandflags.ini" , szCommand.tolower( ) , "None" );
-		
+        local szRequiredFlags = iniGetParam( "data\\commandflags.ini" , szCommand.tolower( ) , "None" );
+        
         if( szRequiredFlags == "None" ) {
             return true;
         }
@@ -1171,88 +1156,91 @@ function canPlayerUseCommand( iPlayerID , szCommand ) {
             return true
         }
     }
+    
     return false;
 }
 
 function resetPlayerDataSlot( iPlayerID ) {
-    
+    return true;
 }
 
 function playerMessageError( iPlayerID , szMessage ) {
     sendPlayerMessage( iPlayerID , Colours.Red + "[ERROR]: " + Colours.White + szMessage + "!" );
+    
+    return true;
 }
 
 function playerMessageSyntax( iPlayerID , szMessage ) {
     sendPlayerMessage( iPlayerID , Colours.Gray25 + "[USAGE]: " + Colours.White + szMessage );
+    
+    return true;
 }
 
 function playerMessageAlert( iPlayerID , szMessage ) {
     sendPlayerMessage( iPlayerID , Colours.Yellow + "[ALERT]: " + Colours.White + szMessage );
+    
+    return true;
 }
 
 function playerMessageSuccess( iPlayerID , szMessage ) {
     sendPlayerMessage( iPlayerID , Colours.Lime + "[SUCCESS]: " + Colours.White + szMessage );
+    
+    return true;
 }
 
 function playerAction( iPlayerID , szAction ) {
-    /*
     local myPos = playerGetPosition( iPlayerID );
     local theirPos = false;
     
-    for( ii , iv in OnlinePlayers ) {
+    foreach( ii , iv in OnlinePlayers ) {
         theirPos = playerGetPosition( iv );
-        if( getDistance( myPos[ 0 ] , myPos[ 1 ] , theirPos[ 0 ] , theirPos[ 1 ] ) <= GlobalConfig.Chat.fActionDistance ) {
+        if( getDistance( myPos[ 0 ] , myPos[ 2 ] , theirPos[ 0 ] , theirPos[ 2 ] ) <= GlobalConfig.Chat.fActionDistance ) {
             playerMessage( iPlayerID , Colours.Purple + playerGetName( iPlayerID ) + " " + szAction );
         }
     }
-    */
     
-    sendAllMessage( Colours.Purple + playerGetName( iPlayerID ) + " " + szAction );
+    //sendAllMessage( Colours.Purple + playerGetName( iPlayerID ) + " " + szAction );
 }
 
 function playerShout( iPlayerID , szMessage ) {
-    /*
     local myPos = playerGetPosition( iPlayerID );
     local theirPos = false;
     
-    for( local i = 0 ; i < serverGetMaxPlayers( ) ; i++ ) {
-        if( playerIsConnected( i ) ) {
-            theirPos = playerGetPosition( i );
-            if( getDistance( myPos[ 0 ] , myPos[ 2 ] , theirPos[ 0 ] , theirPos[ 2 ] ) <= GlobalConfig.Chat.fShoutDistance ) {
-                playerMessage( iPlayerID , Colours.Purple + playerGetName( iPlayerID ) + " " + szAction );
-            }
+    foreach( ii , iv in OnlinePlayers ) {
+        theirPos = playerGetPosition( iv );
+        if( getDistance( myPos[ 0 ] , myPos[ 2 ] , theirPos[ 0 ] , theirPos[ 2 ] ) <= GlobalConfig.Chat.fShoutDistance ) {
+            playerMessage( iPlayerID , Colours.White + playerGetName( iPlayerID ) + " shouts " + szAction + "!" );
+        }
     }
-    */
     
-    sendAllMessage( Colours.White + playerGetName( iPlayerID ) + " shouts: " + Colours.Gray25 + szMessage );
+    //sendAllMessage( Colours.White + playerGetName( iPlayerID ) + " shouts: " + Colours.Gray25 + szMessage );
 }
 
 function getDistance( fX1 , fY1 , fX2 , fY2 ) {
-	return ( sqrt( ( ( fX2 - fX1 ) * ( fX2 - fX1 ) ) + ( ( fY2 - fY1 ) * ( fY2 - fY1 ) ) ) );
+    return ( sqrt( ( ( fX2 - fX1 ) * ( fX2 - fX1 ) ) + ( ( fY2 - fY1 ) * ( fY2 - fY1 ) ) ) );
 }
 
 function getAngleBetweenPos( fX1 , fZ1 , fX2 , fZ2 ) {
-	return atan2( fZ2 + fZ1 , fX2 + fX1);
+    return atan2( fZ2 + fZ1 , fX2 + fX1);
 }
 
 function isInArea( fPosX , fPosY , fX1 , fX2 , fY1 , fY2 ){
-	if( ( fPosX >= fX1 && fPosX <= fX2 ) && ( fPosY >= fY1 && fPosY <= fY2 ) ) {
-		return true;
-	} else {
-		return true;
-	}
+    if( ( fPosX >= fX1 && fPosX <= fX2 ) && ( fPosY >= fY1 && fPosY <= fY2 ) ) {
+        return true;
+    } else {
+        return true;
+    }
 }
 
 function random( iMin , iMax ){
-	srand( time( ) );
-	return ( ( rand( ) % ( iMax - iMin ) ) + iMin);
+    srand( time( ) );
+    return ( ( rand( ) % ( iMax - iMin ) ) + iMin);
 }
 
-function compare( a , b )
-{
-	if( a > b ) return 1
-	else if( a < b ) return -1
-	return 0;
+function compare( a , b ) {
+    if( a > b ) return 1
+    else if( a < b ) return -1
+    return 0;
 }
 
 function spawnAllCarsInLine( fX , fY , fZ , fRot ) {
@@ -1264,7 +1252,7 @@ function spawnAllCarsInLine( fX , fY , fZ , fRot ) {
             fY , 
             fZ , 
             fRot , 
-            5 * idx
+            3 * idx
         );
         
         vehicleSpawn( 
@@ -1410,11 +1398,18 @@ function addPlayerToDatabase( iPlayerID ) {
     local iAccountID = getAccountFreeDataSlot( );
     
     iniCreateFile( "data/accounts/" + iAccountID + ".ini" );
+    
     PlayerData[ iPlayerID ].iAccountID <- iAccountID;
-    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "iRegisteredUnixTS" , time( ).tostring( ) );
-    iniSetParam( "data/accountlist.ini" , playerGetName( iPlayerID ) , iAccountID.tostring( ) );
+    
+    iniSetParam( "data/accountlist.ini" , getDataSafeName( playerGetName( iPlayerID ) ) , iAccountID.tostring( ) );
     
     savePlayerToDatabase( iPlayerID );
+    
+    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "iRegisteredUnixTS" , time( ).tostring( ) );
+    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosX" , GlobalConfig.NewCharacter.fSpawnX.tostring( ) );
+    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosY" , GlobalConfig.NewCharacter.fSpawnY.tostring( ) );
+    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosZ" , GlobalConfig.NewCharacter.fSpawnZ.tostring( ) );    
+    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedRotA" , "0.0" );    
 }
 
 function savePlayerToDatabase( iPlayerID ) {
@@ -1450,7 +1445,7 @@ function savePlayerToDatabase( iPlayerID ) {
 }
 
 function isPlayerRegistered( iPlayerID ) {
-    local iAccountID = iniGetParam( "data/accountlist.ini" , playerGetName( iPlayerID ) , "-1" );
+    local iAccountID = iniGetParam( "data/accountlist.ini" , getDataSafeName( playerGetName( iPlayerID ) ) , "-1" );
     
     iAccountID = iAccountID.tointeger( );
     
@@ -1470,7 +1465,7 @@ function isPlayerRegistered( iPlayerID ) {
 }
 
 function loadPlayerFromDatabase( iPlayerID ) {
-    local iAccountID = iniGetParam( "data/accountlist.ini" , playerGetName( iPlayerID ) , "-1" );
+    local iAccountID = iniGetParam( "data/accountlist.ini" , getDataSafeName( playerGetName( iPlayerID ) ) , "-1" );
     
     if( !iAccountID ) {
         return false;
@@ -1480,7 +1475,7 @@ function loadPlayerFromDatabase( iPlayerID ) {
     
     if( iAccountID == -1 ) {
         return false;
-    }    
+    }
     
     if( !iniFileExists( "data/accounts/" + iAccountID + ".ini" ) ) {
         return false;
@@ -1488,10 +1483,10 @@ function loadPlayerFromDatabase( iPlayerID ) {
     
     PlayerData[ iPlayerID ].iAccountID <- iAccountID;
     
-    local fPosX = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosX" , "unknown" );
-    local fPosY = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosY" , "unknown" );
-    local fPosZ = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosZ" , "unknown" );
-    local fRotA = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedRotA" , "unknown" );
+    local fPosX = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosX" , GlobalConfig.NewCharacter.fSpawnX.tostring( ) );
+    local fPosY = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosY" , GlobalConfig.NewCharacter.fSpawnY.tostring( ) );
+    local fPosZ = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosZ" , GlobalConfig.NewCharacter.fSpawnZ.tostring( ) );
+    local fRotA = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedRotA" , "0.0" );
     local iStaffFlags = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "iStaffFlags" , "unknown" );
     local szLastIP = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "szLastIP" , "unknown" );
     local iLastOnlineUnixTS = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "iLastOnlineUnixTS" , "-1" );
@@ -1527,6 +1522,7 @@ function loadPlayerFromDatabase( iPlayerID ) {
     PlayerData[ iPlayerID ].iRegisterUnixTS <- iLastOnlineUnixTS;
     PlayerData[ iPlayerID ].iAccountSettings <- iAccountSettings;
     PlayerData[ iPlayerID ].iGameSettings <- iGameSettings;
+    
     return true;
 }
 
@@ -1586,37 +1582,43 @@ function loginSuccess( iPlayerID ) {
     
     playerLockControls( iPlayerID , true );   
 
-    PlayerData[ iPlayerID ].iSpawnWaitTick <- ServerSecondTicks;
+    PlayerData[ iPlayerID ].iSpawnWaitTick <- iServerSecondTicks;
 }
 
 function checkSpawnRestoreCooldown( ) {
     for( local i = 0 ; i < serverGetMaxPlayers( ) ; i++ ) {
         if( playerIsConnected( i ) ) {
-			if( PlayerData[ i ].bLoggedIn ) {
-				if( !PlayerData[ i ].bSpawned ) {
-					checkPlayerSpawnRestoreCooldown( i );
-				}
-			}
+            if( PlayerData[ i ].bLoggedIn ) {
+                if( !PlayerData[ i ].bSpawned ) {
+                    checkPlayerSpawnRestoreCooldown( i );
+                }
+            }
         }
     }
 }
 
 function checkPlayerSpawnRestoreCooldown( iPlayerID ) {
-	local iSecondsLeft = abs( ( PlayerData[ iPlayerID ].iSpawnWaitTick + ( GlobalConfig.iSpawnTickWait ) ) - ServerSecondTicks );
-	
-	if( iSecondsLeft > 0 ) {
-		playerMessageAlert( iPlayerID , "Your spawn position will be restored in " + getSecondsText( iSecondsLeft )  );
-		return 1;
-	}
-	
-	playerRestoreSavedPosition( iPlayerID );
-	playerRestoreSavedRotation( iPlayerID );
-	playerRestoreSavedSkin( iPlayerID );
-	playerRestoreSavedWeapons( iPlayerID );
-	playerRestoreSavedMoney( iPlayerID );
-	playerLockControls( iPlayerID , false );
-	PlayerData[ iPlayerID ].iSpawnWaitTick <- 0;
-	PlayerData[ iPlayerID ].bSpawned <- true;		
+    local iSecondsLeft = abs( ( PlayerData[ iPlayerID ].iSpawnWaitTick + ( GlobalConfig.iSpawnTickWait ) ) - iServerSecondTicks );
+    
+    if( iSecondsLeft > 0 ) {
+        playerMessageAlert( iPlayerID , "Your spawn position will be restored in " + getSecondsText( iSecondsLeft )  );
+        return 1;
+    }
+    
+    if( PlayerData[ iPlayerID ].bNewlyRegistered ) {
+        playerSetPosition( iPlayerID , GlobalConfig.NewCharacter.fSpawnX , GlobalConfig.NewCharacter.fSpawnY ,GlobalConfig.NewCharacter.fSpawnZ );
+        savePlayerToDatabase( iPlayerID );
+    } else {
+        playerRestoreSavedPosition( iPlayerID );
+        playerRestoreSavedRotation( iPlayerID );
+        playerRestoreSavedSkin( iPlayerID );
+        playerRestoreSavedWeapons( iPlayerID );
+        playerRestoreSavedMoney( iPlayerID );    
+    }
+    
+    playerLockControls( iPlayerID , false );
+    PlayerData[ iPlayerID ].iSpawnWaitTick <- 0;
+    PlayerData[ iPlayerID ].bSpawned <- true;
 }
 
 function getSecondsText( iSeconds ) {
@@ -1628,8 +1630,9 @@ function getSecondsText( iSeconds ) {
 }
 
 function checkServerSaveCooldown( ) {
-    if( ( ServerSecondTicks - LastServerSaveTick ) >= GlobalConfig.ServerSaveInterval ) {
+    if( ( iServerSecondTicks - iLastServerSaveTick ) >= GlobalConfig.iServerSaveInterval ) {
         saveAllServerData( );
+        iLastServerSaveTick <- iServerSecondTicks;
     }
 }
 
@@ -1660,6 +1663,7 @@ function createPlayerDataSlot( iPlayerID ) {
     PlayerData[ iPlayerID ].iAccountSettings <- AccountSettings.None;
     PlayerData[ iPlayerID ].iGameSettings <- GameSettings.None;
     PlayerData[ iPlayerID ].bIsDead <- false;
+    PlayerData[ iPlayerID ].bNewlyRegistered <- false;
 }
 
 function deletePlayerDataSlot( iPlayerID ) {
@@ -1683,7 +1687,7 @@ function getOnlineAdmins( ) {
                 if( PlayerData[ i ].bLoggedIn ) {
                     temp_admins[ i ] <-  { };
                     temp_admins[ i ].szPlayerName <- playerGetName( i );
-                    temp_admins[ i ].szStaffTitle <- iniGetParam( "data/stafftitles.ini" , playerGetName( i ) , "Unknown" );
+                    temp_admins[ i ].szStaffTitle <- iniGetParam( "data/stafftitles.ini" , getDataSafeName( playerGetName( i ) ) , "Unknown" );
                 }
             }
         }
@@ -1706,106 +1710,28 @@ function loadGlobalConfig( ) {
     GlobalConfig.NewCharacter.iAccountSettings <- iniGetParam( "data/globalconfig.ini" , "iDefaultAccountSettings" , "0" ).tointeger( );
     GlobalConfig.NewCharacter.iStaffFlags <- iniGetParam( "data/globalconfig.ini" , "iDefaultStaffFlags" , "0" ).tointeger( );
     GlobalConfig.NewCharacter.iGameSettings <- iniGetParam( "data/globalconfig.ini" , "iDefaultGameSettings" , "0" ).tointeger( );
+    GlobalConfig.szServerName <- iniGetParam( "data/globalconfig.ini" , "szServerName" , "Unknown" ).tostring( );
 }
 
 function resyncIndexIniFile( ) {
     return true;
 }
 
-/*
-serverGetName
-serverSetDefaultMap
-serverSetGamemodeName
-serverGetMaxPlayers
-serverGetOnlinePlayers
-
-playerGetName
-playerInVehicleID
-playerIsConnected
-playerLockControls
-playerToggleCityMusic
-playerGetIP
-playerChangeSkin
-playerGetSkinID
-playerSetHealth
-playerPlayAnim
-playerAddWeapon
-playerDeleteWeapon
-playerSetPosition
-playerGetPosition
-playerSetRotation
-playerGetRotation
-playerSetMoney
-playerGetMoney
-playerSetObjective;
-playerClearObjective
-playerKickOutVehicle
-playerPutToVehicle
-playerSetCameraFov
-playerGetCameraFov
-playerAddConsoleText
-playerSetTimerInterval
-playerGetTimerInterval
-playerTimerOff
-playerTimerOn
-playerSetCameraPos
-playerGetPing
-playerSetCameraSwing
-playerSetWeatherParam
-playerGetRotationAsVector
-playerSetRotationVector
-playerSetNickColor
-playerIsLocked
-playerEnableMoney
-playerPlaySound
-playerSetCameraToDefault
-
-sendPlayerMessage
-sendAllMessage
-
-guiToggleNametag
-
-allPlaySound
-
-vehicleSpawn
-vehicleExists
-vehicleExplode
-vehicleGetDriverID
-vehicleDelete
-vehicleGetPosition
-vehicleGetRotation
-vehicleSetPosition
-vehicleSetRotation
-vehicleSetDamage
-vehicleGetDamage
-vehicleGetRoofState
-isAnyPlayerInVehicle
-vehicleToggleSiren
-vehicleToggleRoof
-vehicleGetSirenState
-vehicleGetPlayerIDFromSeat
-vehicleGetFuel
-vehicleSetFuel
-vehicleSetSpeed
-vehicleGetDriverID
-
-iniRemoveFile
-iniFileExists
-iniCreateFile
-iniSetParam
-iniGetParam
-
-timerCreate
-
-pickupDelete
-
-sqlite3_column_text
-sqlite3_column_name
-sqlite3_query
-sqlite3_column_count
-sqlite3_finalize
-
-getDistanceBetween3DPoints
-getDistanceBetween2DPoints
-*/
-
+function getDataSafeName( szNormalName ) {
+    local szSplitName = split( szNormalName , " " );
+    local szSafeName = "";
+    
+    if( szSplitName.len( ) > 1 ) {
+        foreach( ii , iv in szSplitName ) {
+            if( szSafeName.len( ) == 0 ) {
+                szSafeName = iv;
+            } else {
+                szSafeName = szSafeName + "_" + iv;
+            }
+        }
+        
+        return szSafeName;
+    }
+    
+    return szNormalName;
+}
