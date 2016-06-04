@@ -66,6 +66,7 @@ function onServerInit( ) {
     VehicleOwnerType.None <- 0;
     VehicleOwnerType.Player <- 1;
     VehicleOwnerType.Faction <- 2;
+    VehicleOwnerType.PublicJob <- 3;
     
     VehicleSeatNames <- [ "Driver" , "Front Passenger" , "Rear Left Passenger" , "Rear Right Passenger" ];
     VehicleTireNames <- [ "Front Left" , "Front Right" , "Rear Left" , "Rear Right" ];
@@ -76,6 +77,12 @@ function onServerInit( ) {
     BlankVehicleData.iModelID <- -1;
     BlankVehicleData.iBuyPrice <- 0;
     BlankVehicleData.iRentPrice <- 0;
+    
+    PublicJobs <- [
+        { szName = "Postal Worker" , szGetJobLocationDesc = "Municipal Building in Central Island" , fGetJobX = 0.0 , fGetJobY = 0.0 , fGetJobZ = 0.0 } , 
+        { szName = "Police Officer" , szGetJobLocationDesc = "Police Station in Central Island" , fGetJobX = 0.0 , fGetJobY = 0.0 , fGetJobZ = 0.0 } , 
+        { szName = "Fire Fighter" , szGetJobLocationDesc = "Fire Station in Works Quarter" , fGetJobX = -1883.96 , fGetJobY = -4.8966 , fGetJobZ = -348.495 } , 
+    ];
 
     PlayerData <- { };
     VehicleData <- { };
@@ -105,6 +112,161 @@ function onServerInit( ) {
     
     serverSetDefaultMap( "FREERIDE" );
 }
+
+VehicleNames <- [
+    "Blue Bolt Ace Tudor",
+    "Dark Blue Bolt Ace Tudor",
+    "Brown Bolt Ace Tudor",
+    "Green Bolt Ace Tudor",
+    "Red Bolt Ace Tudor",
+    "Blue Bolt Ace Touring",
+    "Dark Blue Bolt Ace Touring",
+    "Brown Bolt Ace Touring",
+    "Green Bolt Ace Touring",
+    "Red Bolt Ace Touring",
+    "Blue Bolt Ace Runabout",
+    "Dark Blue Bolt Ace Runabout",
+    "Brown Bolt Ace Runabout",
+    "Green Bolt Ace Runabout",
+    "Red Bolt Ace Runabout",
+    "Blue Bolt Ace Pickup",
+    "Dark Blue Bolt Ace Pickup",
+    "Brown Bolt Ace Pickup",
+    "Green Bolt Ace Pickup",
+    "Red Bolt Ace Pickup",
+    "Blue Bolt Ace Fordor",
+    "Dark Blue Bolt Ace Fordor",
+    "Brown Bolt Ace Fordor",
+    "Green Bolt Ace Fordor",
+    "Red Bolt Ace Fordor",
+    "Blue Bolt Ace Coupe",
+    "Dark Blue Bolt Ace Coupe",
+    "Brown Bolt Ace Coupe",
+    "Green Bolt Ace Coupe",
+    "Red Bolt Ace Coupe",
+    "Brown Bolt Model B Tudor",
+    "Red Bolt Model B Tudor",
+    "Green Bolt Model B Tudor",
+    "Dark Blue Bolt Model B Tudor",
+    "Brown Bolt Model B Roadster",
+    "Red Bolt Model B Roadster",
+    "Green Bolt Model B Roadster",
+    "Dark Blue Bolt Model B Roadster",
+    "Brown Bolt Model B Pickup",
+    "Red Bolt Model B Pickup",
+    "Green Bolt Model B Pickup",
+    "Dark Blue Bolt Model B Pickup",
+    "Brown Bolt Model B Fordor",
+    "Red Bolt Model B Fordor",
+    "Green Bolt Model B Fordor",
+    "Dark Blue Bolt Model B Fordor",
+    "Brown Bolt Model B Delivery",
+    "Red Bolt Model B Delivery",
+    "Green Bolt Model B Delivery",
+    "Dark Blue Bolt Model B Delivery",
+    "Brown Bolt Model B Coupe",
+    "Red Bolt Model B Coupe",
+    "Green Bolt Model B Coupe",
+    "Dark Blue Bolt Model B Coupe",
+    "Brown Bolt Model B Tudor",
+    "Red Bolt Model B Tudor",
+    "Green Bolt Model B Tudor",
+    "Dark Blue Bolt Model B Tudor",
+    "Green Bolt V8 Coupe",
+    "Red Bolt V8 Coupe",
+    "Blue Bolt V8 Coupe",
+    "Grey Bolt V8 Coupe",
+    "Green Bolt V8 Forder",
+    "Red Bolt V8 Forder",
+    "Blue Bolt V8 Forder",
+    "Grey Bolt V8 Forder",
+    "Green Bolt V8 Roadster",
+    "Red Bolt V8 Roadster",
+    "Blue Bolt V8 Roadster",
+    "Grey Bolt V8 Roadster",
+    "Green Bolt V8 Touring",
+    "Red Bolt V8 Touring",
+    "Blue Bolt V8 Touring",
+    "Grey Bolt V8 Touring",
+    "Green Bolt V8 Tudor",
+    "Red Bolt V8 Tudor",
+    "Blue Bolt V8 Tudor",
+    "Grey Bolt V8 Tudor",
+    "Brubaker",
+    "Silver Bruno Speedster 851",
+    "Red Bruno Speedster 851",
+    "Green Bruno Speedster 851",
+    "Caesar 8C 2300 Racing",
+    "Red Caesar 8C Mostro",
+    "Black Caesar 8C Mostro",
+    "White Celeste Marque 500",
+    "Brown Celeste Marque 500",
+    "Blue Corrozella C-Otto",
+    "Green Corrozella C-Otto",
+    "Blue Crusader Chromium Forder",
+    "Violet Crusader Chromium Forder",
+    "Green Crusader Chromium Forder",
+    "Dark Blue Crusader Chromium Forder",
+    "Blue Falconer",
+    "Red Falconer",
+    "Gangster Falconer",
+    "Falconer Yellowcar",
+    "Umber Guardian Terraplane Coupe",
+    "Beige Guardian Terraplane Coupe",
+    "Black Guardian Terraplane Coupe",
+    "Umber Guardian Terraplane Fordor",
+    "Beige Guardian Terraplane Fordor",
+    "Black Guardian Terraplane Fordor",
+    "Umber Guardian Terraplane Tudor",
+    "Beige Guardian Terraplane Tudor",
+    "Black Guardian Terraplane Tudor",
+    "Lassister Fordor",
+    "Lassister Phaeton",
+    "Lassister Roadster",
+    "Lassister Appolyon",
+    "Lassister Charon",
+    "Lassister Police",
+    "Green Shubert Extra Six Forder",
+    "White Shubert Extra Six Forder",
+    "Blue Shubert Extra Six Forder",
+    "Shubert Extra Six Forder Police",
+    "Green Shubert Extra Six Tudor",
+    "White Shubert Extra Six Tudor",
+    "Blue Shubert Extra Six Tudor",
+    "Shubert Extra Six Tudor Police",
+    "Red Shubert Six",
+    "White Shubert Six",
+    "Black Shubert Six",
+    "Shubert Six Police",
+    "Silver Fletcher",
+    "Orange Thor 810 Cabriolet",
+    "Black Thor 810 Cabriolet",
+    "Orange Thor 810 Phaeton",
+    "Black Thor 810 Phaeton",
+    "Orange Thor 810 Sedan",
+    "Black Thor 810 Sedan",
+    "Trautenberg Model J",
+    "Trautenberg Racer 4WD",
+    "Yellow Ulver Airstream Fordor",
+    "Green Ulver Airstream Fordor",
+    "Yellow Ulver Airstream Tudor",
+    "Green Ulver Airstream Tudor",
+    "Blue Wright Coupe",
+    "Red Wright Coupe",
+    "Green Wright Coupe",
+    "Gangster Wright Coupe",
+    "Blue Wright Fordor",
+    "Red Wright Fordor",
+    "Green Wright Fordor",
+    "Gangster Wright Fordor",
+    "Bolt Ambulance",
+    "Bolt Firetruck",
+    "Bolt Hearse",
+    "Bolt Truck Flatbed",
+    "Bolt Truck Covered",
+    "Bolt Truck (Atlantic Import)"
+    "Bolt Truck"
+];
 
 function onPickupTaken( iPickupID , iPlayerID ) { 
     
@@ -207,6 +369,46 @@ function onPlayerEnterVehicle( iPlayerID , iVehicleID , iSeatID ) {
     playerToggleCityMusic( iPlayerID , VehicleData[ iVehicleID ].iRadioID );
     playerMessageAlert( iPlayerID , "You entered vehicle " + iVehicleID + " in the " + VehicleSeatNames[ iSeatID ] + " seat." );
     
+    if( VehicleData[ iVehicleID ].iOwnerType == VehicleOwnerType.Player ) {
+        if( VehicleData[ iVehicleID ].iOwnerID != PlayerData[ iPlayerID ].iAccountID ) {
+            local szOwnerName = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "szName" , "(Unknown)" );
+            
+            if( VehicleData[ iVehicleID ].bLocked ) {
+                playerMessageAlert( iPlayerID , "This vehicle belongs to " + szOwnerName + ". It is locked, so you cannot drive it." );
+                playerKickOutVehicle( iPlayerID );
+            } else {
+                playerMessageAlert( iPlayerID , "This vehicle belongs to " + szOwnerName + ". It is not locked, so you may drive it." );
+            }
+            return true;
+        } else {
+            sendPlayerMessage( iPlayerID , Colours.White + "This vehicle belongs to you, " + playerGetName( iPlayerID ) );
+            if( VehicleData[ iVehicleID ].iDMVRegistrationID == 0 ) {
+                playerMessageAlert( iPlayerID , "This vehicle has not been registered with the Department of Motor Vehicles!" );
+            }
+        }
+    }
+    
+    if( VehicleData[ iVehicleID ].iOwnerType == VehicleOwnerType.PublicJob ) {
+        if( VehicleData[ iVehicleID ].iOwnerID != PlayerData[ iPlayerID ].iPublicJob ) {
+            local iPublicJobID = VehicleData[ iVehicleID ].iOwnerID;
+            
+            playerMessageError( iPlayerID , "You cannot drive this vehicle! It belongs to the '" + PublicJobs[ iPublicJobID ].szName + "' job!" );
+            playerMessageAlert( iPlayerID , "To get the '" + PublicJobs[ iPublicJobID ].szName + "' job, visit the " + PublicJobs[ iPublicJobID ].szGetJobLocationDesc + " and use /getjob!" );
+            playerKickOutVehicle( iPlayerID );
+            return true;
+        }
+    }
+    
+    if( VehicleData[ iVehicleID ].iOwnerType == VehicleOwnerType.Faction ) {
+        if( VehicleData[ iVehicleID ].iOwnerID != PlayerData[ iPlayerID ].iFactionID ) {
+            local iFactionID = VehicleData[ iVehicleID ].iOwnerID;
+            
+            playerMessageError( iPlayerID , "You cannot drive this vehicle! It belongs to the '" + Factions[ iFactionID ].szName + "' faction!" );
+            playerKickOutVehicle( iPlayerID );
+            return true;
+        }
+    }
+    
     if( iSeatID == 0 ) {
         if( VehicleData[ iVehicleID ].iBuyPrice > 0 ) {
             sendPlayerMessage( iPlayerID , Colours.Cyan + "This vehicle is for sale. It costs $" + VehicleData[ iVehicleID ].iBuyPrice + " to buy it." );
@@ -221,8 +423,10 @@ function onPlayerEnterVehicle( iPlayerID , iVehicleID , iSeatID ) {
             PlayerData[ iPlayerID ].iVehRentStart <- time( );
         }
     }
-    
+        
     print( "Player " + playerGetName( iPlayerID ) + "[" + iPlayerID + "] entered vehicle " + iVehicleID + " in seat " + iSeatID );
+    
+    return true;
 }
 
 function onPlayerExitVehicle( iPlayerID , iVehicleID ) {
@@ -266,6 +470,7 @@ function onPlayerKeyPressed( iPlayerID , iKeyID ) {
 
 function onPlayerCommand( iPlayerID , szCommand , szParams ) {
     consoleMessage( getPlayerNameAndID( iPlayerID ) + " has sent command: /" + szCommand + " " + szParams );
+    
     if( szCommand.tolower( ) == "q" ) {
         return 1;
     }
@@ -413,6 +618,7 @@ function onPlayerCommand( iPlayerID , szCommand , szParams ) {
             VehicleData[ iVehicleID ].iRentPrice <- 0;
             VehicleData[ iVehicleID ].iRadioID <- 0;
             VehicleData[ iVehicleID ].bSavedPosLock <- 0;
+            VehicleData[ iVehicleID ].iDMVRegistrationID <- 0;
             
             //addVehicleToDatabase( iPlayerID );
             break;
@@ -1121,7 +1327,7 @@ function radiansToDegrees( fRadians ) {
 }
 
 function isValidVehicleModelID( iModelID ) {
-    if( iModelID < 169 ) {
+    if( iModelID < 151 ) {
         return true;
     }
     
@@ -1342,6 +1548,7 @@ function loadVehicleFromDatabase( iVehicleDataID ) {
         local iRentPrice = iniGetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "iRentPrice" , "0" );    
         local iRadioID   = iniGetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "iRadioID" , "0" );    
         local bSavedPosLock = iniGetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "bSavedPosLock" , "0" );  
+        local iDMVRegistrationID = iniGetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "iDMVRegistrationID" , "0" );  
         
         local iVehicleID = vehicleSpawn( iModelID.tointeger( ) , fSavedPosX.tofloat( ) , fSavedPosY.tofloat( ), fSavedPosZ.tofloat( ) , fSavedRotX.tofloat( ) , fSavedRotY.tofloat( ) , fSavedRotZ.tofloat( ) );
 
@@ -1354,6 +1561,7 @@ function loadVehicleFromDatabase( iVehicleDataID ) {
         VehicleData[ iVehicleID ].iRentPrice <- iRentPrice.tointeger( );    
         VehicleData[ iVehicleID ].iRadioID <- iRadioID.tointeger( ); 
         VehicleData[ iVehicleID ].bSavedPosLock <- bSavedPosLock;
+        VehicleData[ iVehicleID ].iDMVRegistrationID <- iDMVRegistrationID.tointeger( );
     }
 }
 
@@ -1391,7 +1599,8 @@ function saveVehicleToDatabase( iVehicleID ) {
     iniSetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "bLocked" , "0" );
     iniSetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "iRentPrice" , VehicleData[ iVehicleID ].iRentPrice.tostring( ) );
     iniSetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "iBuyPrice" , VehicleData[ iVehicleID ].iBuyPrice.tostring( ) );    
-    iniSetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "bSavedPosLock" , VehicleData[ iVehicleID ].bSavedPosLock.tostring( ) );    
+    iniSetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "bSavedPosLock" , VehicleData[ iVehicleID ].bSavedPosLock.tostring( ) );
+    iniSetParam( "data/vehicles/" + iVehicleDataID + ".ini" , "iDMVRegistrationID" , VehicleData[ iVehicleID ].iDMVRegistrationID.tostring( ) );
 }
 
 function addPlayerToDatabase( iPlayerID ) {
@@ -1409,7 +1618,7 @@ function addPlayerToDatabase( iPlayerID ) {
     iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosX" , GlobalConfig.NewCharacter.fSpawnX.tostring( ) );
     iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosY" , GlobalConfig.NewCharacter.fSpawnY.tostring( ) );
     iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedPosZ" , GlobalConfig.NewCharacter.fSpawnZ.tostring( ) );    
-    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedRotA" , "0.0" );    
+    iniSetParam( "data/accounts/" + iAccountID + ".ini" , "fSavedRotA" , "0.0" );
 }
 
 function savePlayerToDatabase( iPlayerID ) {
@@ -1496,6 +1705,7 @@ function loadPlayerFromDatabase( iPlayerID ) {
     local iSkinID = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "iSkinID" , "0" );
     local iAccountSettings = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "iAccountSettings" , "0" );
     local iGameSettings = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "iGameSettings" , "0" );
+    local iPublicJob = iniGetParam( "data/accounts/" + iAccountID + ".ini" , "iPublicJob" , "0" );
     
     fPosX = fPosX.tofloat( );
     fPosY = fPosY.tofloat( );
@@ -1510,6 +1720,7 @@ function loadPlayerFromDatabase( iPlayerID ) {
     iSkinID = iSkinID.tointeger( );
     iAccountSettings = iAccountSettings.tointeger( );
     iGameSettings = iGameSettings.tointeger( );
+    iPublicJob = iPublicJob.tointeger( );
     
     PlayerData[ iPlayerID ].iStaffFlags <- iStaffFlags
     PlayerData[ iPlayerID ].szLastIP <- szLastIP;
@@ -1522,6 +1733,7 @@ function loadPlayerFromDatabase( iPlayerID ) {
     PlayerData[ iPlayerID ].iRegisterUnixTS <- iLastOnlineUnixTS;
     PlayerData[ iPlayerID ].iAccountSettings <- iAccountSettings;
     PlayerData[ iPlayerID ].iGameSettings <- iGameSettings;
+    PlayerData[ iPlayerID ].iPublicJob <- iPublicJob;
     
     return true;
 }
