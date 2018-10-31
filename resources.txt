@@ -1,1 +1,2 @@
 SERVER server.nut
+CLIENT client.nut
