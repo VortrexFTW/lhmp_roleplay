@@ -449,7 +449,7 @@ function onPlayerEnterVehicle(iPlayerID, iVehicleID, iSeatID) {
 	
 	if(VehicleData[iVehicleID].iOwnerType == VehicleOwnerType.Player) {
 		if(VehicleData[iVehicleID].iOwnerID != PlayerData[iPlayerID].iAccountID) {
-			local szOwnerName = iniGetParam("data/accounts/" + iAccountID + ".ini", "szName", "(Unknown)");
+			local szOwnerName = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "szName", "(Unknown)");
 			
 			if(VehicleData[iVehicleID].bLocked) {
 				playerMessageAlert(iPlayerID, "This vehicle belongs to " + szOwnerName + ". It is locked, so you cannot drive it.");
@@ -546,7 +546,7 @@ function onPlayerKeyPressed(iPlayerID, iKeyID) {
 }
 
 function onPlayerCommand(iPlayerID, szCommand, szParams) {
-	consoleMessage(getPlayerNameAndID(iPlayerID)+ " has sent command: /" + szCommand + " " + szParams);
+	consoleMessage(getPlayerNameAndID(iPlayerID) + " has sent command: /" + szCommand + " " + szParams);
 	
 	if(szCommand.tolower() == "q") {
 		return 1;
@@ -649,7 +649,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 		case "sr":
 			local result = compilestring("return " + szParams)();
-			playerMessageSuccess(iPlayerID, "Code Executed! Returns: " + result + "(" + type(result)+ ")");
+			playerMessageSuccess(iPlayerID, "Code Executed! Returns: " + result + " (" + type(result)+ ")");
 			break;
 			
 		case "se":
@@ -821,7 +821,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 				}
 			}
 			
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has deleted all vehicles");
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has deleted all vehicles");
 			playerMessageSuccess(iPlayerID, "All vehicles have been deleted");
 			break;
 		*/
@@ -884,7 +884,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			playerMessageAlert(iTargetID, "Your skin has been changed to ID " + iSkinID + " by " + playerGetName(iPlayerID));
 			playerMessageSuccess(iPlayerID, "You have changed " + playerGetName(iPlayerID)+ "'s skin to " + iSkinID);
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has changed " + getPlayerNameAndID(iTargetID)+ " skin to " + iSkinID);
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has changed " + getPlayerNameAndID(iTargetID)+ " skin to " + iSkinID);
 			playerChangeSkin(iTargetID, iSkinID);
 			break;
 			
@@ -908,14 +908,14 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			sendAllMessage(Colours.Red + playerGetName(iTargetID)+ " has been kicked by an administrator for: " + szReason);
 			playerMessageSuccess(iPlayerID, "You kicked " + playerGetName(iTargetID)+ " for: " + szReason);
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has kicked " + getPlayerNameAndID(iTargetID)+ " for: " + szReason);
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has kicked " + getPlayerNameAndID(iTargetID)+ " for: " + szReason);
 			playerKick(iTargetID);
 			break;
 			
 		case "mypos":
 			local fMyPos = playerGetPosition(iPlayerID);
 			playerMessageAlert(iPlayerID, "Your current position is " + fMyPos[0]+ ", " + fMyPos[1]+ ", " + fMyPos[2]);
-			print(getPlayerNameAndID(iPlayerID)+ "'s current position: " + fMyPos[0]+ ", " + fMyPos[1]+ ", " + fMyPos[2]);
+			print(getPlayerNameAndID(iPlayerID) + "'s current position: " + fMyPos[0]+ ", " + fMyPos[1]+ ", " + fMyPos[2]);
 			break;
 			
 		case "gotopos": 
@@ -946,7 +946,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 				return 1;
 			}
 			
-			iniSetParam("data/stafftitles.ini", playerGetName(iPlayerID), szStaffTitle);
+			iniSetParam("data\\stafftitles.ini", playerGetName(iPlayerID), szStaffTitle);
 			playerMessageSuccess(iPlayerID, "You set " + playerGetName(iTargetID)+ "'s staff title to " + szStaffTitle);
 			break;
 			
@@ -964,7 +964,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			playerMessageAlert(iTargetID, "You have been frozen by an administrator");
 			playerMessageAlert(iPlayerID, "You have frozen " + playerGetName(iTargetID));
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has frozen " + getPlayerNameAndID(iTargetID));
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has frozen " + getPlayerNameAndID(iTargetID));
 			PlayerData[iTargetID].Frozen <- true;
 			playerLockControls(iTargetID, 1);
 			break;
@@ -983,7 +983,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			playerMessageAlert(iTargetID, "You have been unfrozen by an administrator");
 			playerMessageAlert(iPlayerID, "You have unfrozen " + playerGetName(iTargetID));
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has unfrozen " + getPlayerNameAndID(iTargetID));										
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has unfrozen " + getPlayerNameAndID(iTargetID));										
 			PlayerData[iTargetID].Frozen <- false;
 			playerLockControls(iTargetID, 0);
 			break;
@@ -1002,7 +1002,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			playerMessageAlert(iTargetID, "You have been muted by an administrator");
 			playerMessageAlert(iPlayerID, "You have muted " + playerGetName(iTargetID));
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has muted " + getPlayerNameAndID(iTargetID));										 
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has muted " + getPlayerNameAndID(iTargetID));										 
 			PlayerData[iTargetID].Muted <- true;
 			break;
 			
@@ -1020,7 +1020,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			playerMessageAlert(iTargetID, "You have been unmuted by an administrator");
 			playerMessageAlert(iPlayerID, "You have unmuted " + playerGetName(iTargetID));
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has unmuted " + getPlayerNameAndID(iTargetID));										   
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has unmuted " + getPlayerNameAndID(iTargetID));										   
 			PlayerData[iTargetID].Muted <- false;
 			break; 
 			
@@ -1041,7 +1041,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			playerSetPosition(iPlayerID, pos[0], pos[1], pos[2]);
 			
 			playerMessageAlert(iPlayerID, "You have teleported to " + playerGetName(iTargetID)); 
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has teleported to " + getPlayerNameAndID(iTargetID));										 
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has teleported to " + getPlayerNameAndID(iTargetID));										 
 			break;
 			
 		case "gotoveh":
@@ -1061,7 +1061,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			playerSetPosition(iPlayerID, pos[0], pos[1]+ 3.0, pos[2]);
 			
 			playerMessageAlert(iPlayerID, "You have teleported to vehicle " + iTargetID);
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has teleported to vehicle " + iTargetID);							 
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has teleported to vehicle " + iTargetID);							 
 			break;	
 
 		case "vehinfo":
@@ -1099,7 +1099,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			vehicleSetPosition(iTargetID, front[0], front[1], front[2]);
 			
 			playerMessageAlert(iPlayerID, "You teleported vehicle " + iTargetID + " to your location.");
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has teleported vehicle " + iTargetID + " to their position");							 
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has teleported vehicle " + iTargetID + " to their position");							 
 			break;
 			
 		case "get":
@@ -1120,7 +1120,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			playerMessageAlert(iPlayerID, "You have teleported " + playerGetName(iTargetID)+ " to your position.");
 			playerMessageAlert(iTargetID, "You have been teleported to " + playerGetName(iPlayerID));		  
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has been teleported to " + getPlayerNameAndID(iTargetID));				  
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has been teleported to " + getPlayerNameAndID(iTargetID));				  
 			break;
 			
 		case "siren":
@@ -1139,11 +1139,11 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 					if(vehicleGetSirenState(iVehicleID)) {
 						vehicleToggleSiren(iVehicleID, 0);
 						playerMessageSuccess(iPlayerID, "You have turned off the siren for vehicle " + iVehicleID);				   
-						consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned off the siren for vehicle + " + iVehicleID);
+						consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned off the siren for vehicle + " + iVehicleID);
 					} else {
 						vehicleToggleSiren(iVehicleID, 1);
 						playerMessageSuccess(iPlayerID, "You have turned on the siren for vehicle " + iVehicleID); 
-						consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned on the siren for vehicle + " + iVehicleID);				  
+						consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned on the siren for vehicle + " + iVehicleID);				  
 					}				
 					break;
 					
@@ -1153,12 +1153,12 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 							VehicleData[iVehicleID].bSirenState = 0;
 							vehicleToggleSiren(iVehicleID, 0);
 							playerMessageSuccess(iPlayerID, "You have turned off the siren for vehicle " + iVehicleID);				   
-							consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned off the siren for vehicle + " + iVehicleID);							
+							consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned off the siren for vehicle + " + iVehicleID);							
 						} else {
 							VehicleData[iVehicleID].bSirenState = 1;
 							VehicleSirens.push(iVehicleID);
 							playerMessageSuccess(iPlayerID, "You have turned on the siren for vehicle " + iVehicleID); 
-							consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned on the siren for vehicle + " + iVehicleID);							
+							consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned on the siren for vehicle + " + iVehicleID);							
 						}
 					} else {
 						playerMessageError(iPlayerID, "This vehicle doesn't have a siren!");
@@ -1192,12 +1192,12 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 				VehicleData[iVehicleID].bSavedPosLock <- 1;
 				playerMessageSuccess(iPlayerID, "You have parked vehicle " + iVehicleID);
 				playerMessageAlert(iPlayerID, "Vehicle " + iVehicleID + " will now respawn here.");
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has parked vehicle " + iVehicleID);
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has parked vehicle " + iVehicleID);
 			} else {
 				VehicleData[iVehicleID].bSavedPosLock <- 0;
 				playerMessageSuccess(iPlayerID, "You have un-parked vehicle " + iVehicleID);
 				playerMessageAlert(iPlayerID, "Vehicle " + iVehicleID + " will now respawn wherever you leave it.");
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has un-parked for vehicle " + iVehicleID);
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has un-parked for vehicle " + iVehicleID);
 			}
 			break;			  
 		  
@@ -1234,13 +1234,13 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 				szPassengerMessage = Colours.White + playerGetName(iPlayerID)+ " has turned off the radio";
 				playerMessageSuccess(iPlayerID, "You have turned off the radio for vehicle " + iVehicleID);
 				playerMessageAlert(iPlayerID, "You may need to get out of the vehicle and get back in to stop the radio.");
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned off the radio for vehicle + " + iVehicleID);
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned off the radio for vehicle + " + iVehicleID);
 			} else {
 				VehicleData[iVehicleID].iRadioID <- 1;
 				playerMessageSuccess(iPlayerID, "You have turned on the radio for vehicle " + iVehicleID);			  
 				szPassengerMessage = Colours.White + playerGetName(iPlayerID)+ " has turned on the radio";
 				playerMessageAlert(iPlayerID, "You may need to get out of the vehicle and get back in to play the radio.");
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned on the radio for vehicle + " + iVehicleID);
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned on the radio for vehicle + " + iVehicleID);
 			}
 			
 			for(local i = 0 ; i < 4 ; i++) {
@@ -1279,11 +1279,11 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			if(vehicleGetSirenState(iVehicleID)) {
 				vehicleToggleSiren(iVehicleID, 0);
 				playerMessageSuccess(iPlayerID, "You have turned off the siren for vehicle " + iVehicleID);	 
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned off the siren for vehicle + " + iVehicleID);
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned off the siren for vehicle + " + iVehicleID);
 			} else {
 				vehicleToggleSiren(iVehicleID, 1);
 				playerMessageSuccess(iPlayerID, "You have turned on the siren for vehicle " + iVehicleID);			  
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned on the siren for vehicle + " + iVehicleID);
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned on the siren for vehicle + " + iVehicleID);
 			}
 			break;
 			
@@ -1308,7 +1308,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 				
 			VehicleData[iVehicleID].iRentPrice <- iPrice;
 			playerMessageSuccess(iPlayerID, "You have set the rent price to $" + iPrice + " for vehicle " + iVehicleID);
-			consoleMessage(getPlayerNameAndID(iPlayerID)+ " has set the rent price to $" + iPrice + " for vehicle " + iVehicleID);
+			consoleMessage(getPlayerNameAndID(iPlayerID) + " has set the rent price to $" + iPrice + " for vehicle " + iVehicleID);
 			break;	 
 			
 		case "setroof":
@@ -1327,11 +1327,11 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			if(!vehicleGetRoofState(iVehicleID)) {
 				vehicleToggleRoof(iVehicleID, 1);
 				playerMessageSuccess(iPlayerID, "You have closed the roof for vehicle " + iVehicleID);	
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has closed the roof for vehicle + " + iVehicleID);					
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has closed the roof for vehicle + " + iVehicleID);					
 			} else {
 				vehicleToggleRoof(iVehicleID, 0);
 				playerMessageSuccess(iPlayerID, "You have opened the roof for vehicle " + iVehicleID);	
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has opened the roof for vehicle + " + iVehicleID);				  
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has opened the roof for vehicle + " + iVehicleID);				  
 			}
 			break;			   
   
@@ -1346,11 +1346,11 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			if(!vehicleGetRoofState(iVehicleID)) {
 				vehicleToggleRoof(iVehicleID, 1);
 				playerMessageSuccess(iPlayerID, "You have closed the roof for vehicle " + iVehicleID);	
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has closed the roof for vehicle + " + iVehicleID);					
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has closed the roof for vehicle + " + iVehicleID);					
 			} else {
 				vehicleToggleRoof(iVehicleID, 0);
 				playerMessageSuccess(iPlayerID, "You have opened the roof for vehicle " + iVehicleID);	
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has opened the roof for vehicle + " + iVehicleID);				  
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has opened the roof for vehicle + " + iVehicleID);				  
 			}
 			break;		 
 			
@@ -1364,11 +1364,11 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			if(!vehicleGetLightState(iVehicleID)) {
 				vehicleToggleLights(iVehicleID, 0);
 				playerMessageSuccess(iPlayerID, "You have turned off the lights for vehicle " + iVehicleID);  
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned off the lights for vehicle + " + iVehicleID);				  
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned off the lights for vehicle + " + iVehicleID);				  
 			} else {
 				vehicleToggleLights(iVehicleID, 1);
 				playerMessageSuccess(iPlayerID, "You have turned on the lights for vehicle " + iVehicleID);	 
-				consoleMessage(getPlayerNameAndID(iPlayerID)+ " has turned on the lights for vehicle + " + iVehicleID);				   
+				consoleMessage(getPlayerNameAndID(iPlayerID) + " has turned on the lights for vehicle + " + iVehicleID);				   
 			}
 			break;				
 			
@@ -1393,7 +1393,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 			
 			sendPlayerMessage(iPlayerID, Colours.Cyan + "=============== " + Colours.White + " ADMINS " + Colours.Cyan + " ===============");
 			foreach(ii, iv in tblAdmins) {
-				sendPlayerMessage(iPlayerID, Colours.White + " - " + Colours.Orange + iv.szPlayerName + Colours.Gray50 + "(" + iv.szStaffTitle + ")");
+				sendPlayerMessage(iPlayerID, Colours.White + " - " + Colours.Orange + iv.szPlayerName + Colours.Gray50 + " (" + iv.szStaffTitle + ")");
 			}
 			break; 
 			
@@ -1446,13 +1446,13 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 					sendPlayerMessage(iPlayerID, Colours.White + "When entering a vehicle for sale, instructions will be given to you on how to buy it.");
 					sendPlayerMessage(iPlayerID, Colours.Gray25 + "Don't forget to register your vehicle at the Department of Motor Vehicles building!");
 					sendPlayerMessage(iPlayerID, Colours.White + "You will need a driver's license to legally drive a motor vehicle in Lost Heaven.");
-					sendPlayerMessage(iPlayerID, Colours.Gray25 + "- Available commands: /siren, /roof, /radio, /engine, /lights, /lock, /lockdoor");
+					sendPlayerMessage(iPlayerID, Colours.Gray25 + "- Available commands: /siren, /roof, /radio, /lights /autolightsoff /autosirenoff /autoroofclose");
 					//sendPlayerMessage(iPlayerID, Colours.Cyan + "===================================");
 					break;
 					
 				case "account":
 					sendPlayerMessage(iPlayerID, Colours.Cyan + "== ACCOUNT HELP ===================");
-					sendPlayerMessage(iPlayerID, Colours.Gray25 + "- Available commands: /login /iplogin /registered");
+					sendPlayerMessage(iPlayerID, Colours.Gray25 + "- Available commands: /login /iplogin");
 					//sendPlayerMessage(iPlayerID, Colours.Cyan + "===================================");
 					break;				  
 					
@@ -1465,6 +1465,7 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 					sendPlayerMessage(iPlayerID, Colours.Gray25 + "- Available commands: /shout, /me, /b, /do");
 					//sendPlayerMessage(iPlayerID, Colours.Cyan + "===================================");
 					break; 
+					
 				case "admin":
 					if(PlayerData[iPlayerID].iStaffFlags == 0) {
 						playerMessageError(iPlayerID, "You cannot view this help section!");
@@ -1655,13 +1656,186 @@ function onPlayerCommand(iPlayerID, szCommand, szParams) {
 
 // ----------------------------------------------------------------------------
 
+function getPosInFrontOfPos( fX , fY , fZ , fAngle , fDistance ) {
+    fAngle = degreesToRadians( fAngle );
+    
+    local fX2 = ( fX + ( ( cos( -fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    local fZ2 = ( fZ + ( ( sin( -fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    
+    return [ fX2 , fY , fZ2 ];
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosBehindPos( fX , fY , fZ , fAngle , fDistance ) {
+    fAngle = degreesToRadians( fAngle );
+    
+    local fX2 = ( fX + ( ( cos( fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    local fZ2 = ( fZ + ( ( sin( fAngle + ( PI / 2 ) ) ) * fDistance ) );
+    
+    return [ fX2 , fY , fZ2 ];
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosInFrontOfPlayer( iPlayerID , fDistance ) {
+    local pos = playerGetPosition( iPlayerID );
+    local rot = playerGetRotation( iPlayerID );
+    
+    return getPosInFrontOfPos( pos[ 0 ] , pos[ 1 ] , pos[ 2 ] , rot , fDistance );
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosBehindPlayer( iPlayerID , fDistance ) {
+    local pos = playerGetPosition( iPlayerID );
+    local rot = playerGetRotation( iPlayerID );
+    
+    return getPosBehindPos( pos[ 0 ] , pos[ 1 ] , pos[ 2 ] , rot , fDistance );
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosAbovePos( fX , fY , fZ , fHeight = 0.0 ) {
+    return [ fX , fY-height , fZ ];
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosBelowPos( fX , fY , fZ , fHeight = 0.0 ) {
+    return [ fX , fY-height , fZ ];
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosAbovePlayer( iPlayerID , fDistance ) {
+    local pos = playerGetPosition( iPlayerID );
+    local rot = playerGetRotation( iPlayerID );
+    
+    return getPosAbovePos( pos[ 0 ] , pos[ 1 ] , pos[ 2 ] , fDistance );
+}
+
+// ----------------------------------------------------------------------------
+
+function getPosBelowPlayer( iPlayerID , fDistance ) {
+    local pos = playerGetPosition( iPlayerID );
+    local rot = playerGetRotation( iPlayerID );
+    
+    return getPosBelowPos( pos[ 0 ] , pos[ 1 ] , pos[ 2 ] , fDistance );
+}
+
+// ----------------------------------------------------------------------------
+
+function getOffsetFromPos( fX1 , fY1 , fZ1 , fX2 = 0.0 , fY2 = 0.0 , fZ2 = 0.0 ) {
+    return [ fX1 + fX2 , fY1 + fY2 , fZ1 + fZ2 ];
+}
+
+// ----------------------------------------------------------------------------
+
+function getCardinalDirectionText( iDirectionID ) {    
+    return CardinalDirections[ iDirectionID ];
+}
+
+// ----------------------------------------------------------------------------
+
+function getCardinalDirection( fX1 , fZ1 , fX2 , fZ2 ) {
+    local a = fX1 - fX2;
+    local b = fZ1 - fZ2;
+    local x = abs( a );
+    local y = abs( b );
+    
+    local no = 0;
+    local ne = 1;
+    local ea = 2;
+    local se = 3;
+    local so = 4;
+    local sw = 5;
+    local we = 6;
+    local nw = 7;
+    local na = 8; // Unknown (not available)
+    
+    if( b < 0 && a < 0 ) {
+        if( x < ( y / 2 ) ) {
+            return no;
+        } else if( y < ( x / 2 ) ) {
+            return east;
+        } else {
+            return ne;
+        }
+    } else if( b < 0 && a >= 0 ) {
+        if( x < ( y / 2 ) ) {
+            return no;
+        } else if( y < ( x / 2 ) ) {
+            return we;
+        } else {
+            return nw;
+        }
+    } else if( b >= 0 && a >= 0 ) {
+        if( x < ( y / 2 ) ) {
+            return so;
+        } else if( y < ( x / 2 ) ) {
+            return w;
+        } else {
+            return sw;
+        }
+    } else if( b >= 0 && a < 0 ) {
+        if( x < ( y / 2 ) ) {
+            return s;
+        } else if( y < ( x / 2 ) ) {
+            return e;
+        } else {
+            return se;
+        }
+    } else {
+        return na;
+    }
+}
+
+// ----------------------------------------------------------------------------
+
+function degreesToRadians( fDegrees ) {
+    return fDegrees * ( PI / 180 );
+}
+
+// ----------------------------------------------------------------------------
+
+function radiansToDegrees( fRadians ) {
+    return fRadians * ( 180 / PI );
+}
+
+// ----------------------------------------------------------------------------
+
+function isValidVehicleModelID(iModelID) {
+	if(iModelID < 0) {
+		return false;
+	}
+	
+	if(iModelID > VehicleNames.len()) {
+		return false;
+	}
+	
+	return true;
+}
+
+// ----------------------------------------------------------------------------
+
+function isValidSkinID( iSkinID ) {
+    if( iSkinID < 302 ) {
+        return true;
+    }
+    
+    return false;
+}
+
+// ----------------------------------------------------------------------------
+
 function canPlayerUseCommand(iPlayerID, szCommand) {
 	if(szCommand.tolower() == "login" || szCommand.tolower() == "register") {
 		return true;
 	}
 	
 	if(PlayerData[iPlayerID].bLoggedIn) {
-		local szRequiredFlags = iniGetParam("data/commandflags.ini", szCommand.tolower(), "None");
+		local szRequiredFlags = iniGetParam("data\\commandflags.ini", szCommand.tolower(), "None");
 		
 		if(szRequiredFlags == "None") {
 			return true;
@@ -1772,7 +1946,7 @@ function playerTalk(iPlayerID, szMessage) {
 	local iVehicleID = playerInVehicleID(iPlayerID);
 	
 	foreach(ii, iv in onlinePlayers) {
-		if(iv != iPlayerID) {
+		//if(iv != iPlayerID) {
 			if(iVehicleID != -1) {
 				if(iVehicleID == playerInVehicleID(iv)) {
 					sendPlayerMessage(iv, Colours.Gray25 + playerGetName(iPlayerID)+ " says " + szMessage);
@@ -1783,7 +1957,7 @@ function playerTalk(iPlayerID, szMessage) {
 					sendPlayerMessage(iv, Colours.Gray25 + playerGetName(iPlayerID)+ " says " + szMessage);
 				}
 			}
-		}
+		//}
 	}
 	
 	//sendAllMessage(Colours.White + playerGetName(iPlayerID)+ " shouts: " + Colours.Gray25 + szMessage);
@@ -1802,9 +1976,46 @@ function playerPhoneTalk(iPlayerID, szMessage) {
 		}
 	}
 	
-	sendPlayerMessage(PlayerData[iPlayerID].pUsingPayPhone.pOnCallWith.iUsingID, Colours.Gray25 + "(Phone): " + szMessage);
+	sendPlayerMessage(PlayerData[iPlayerID].pUsingPayPhone.pOnCallWith.iUsingID, Colours.Gray25 + " (phone): " + szMessage);
 	
 	//sendAllMessage(Colours.White + playerGetName(iPlayerID)+ " shouts: " + Colours.Gray25 + szMessage);
+}
+
+// ----------------------------------------------------------------------------
+
+function getDistance( fX1 , fY1 , fX2 , fY2 ) {
+    return ( sqrt( ( ( fX2 - fX1 ) * ( fX2 - fX1 ) ) + ( ( fY2 - fY1 ) * ( fY2 - fY1 ) ) ) );
+}
+
+// ----------------------------------------------------------------------------
+
+function getAngleBetweenPos( fX1 , fZ1 , fX2 , fZ2 ) {
+    return atan2( fZ2 + fZ1 , fX2 + fX1);
+}
+
+// ----------------------------------------------------------------------------
+
+function isInArea( fPosX , fPosY , fX1 , fX2 , fY1 , fY2 ){
+    if( ( fPosX >= fX1 && fPosX <= fX2 ) && ( fPosY >= fY1 && fPosY <= fY2 ) ) {
+        return true;
+    } else {
+        return true;
+    }
+}
+
+// ----------------------------------------------------------------------------
+
+function random( iMin , iMax ){
+    srand( time( ) );
+    return ( ( rand( ) % ( iMax - iMin ) ) + iMin);
+}
+
+// ----------------------------------------------------------------------------
+
+function compare( a , b ) {
+    if( a > b ) return 1
+    else if( a < b ) return -1
+    return 0;
 }
 
 // ----------------------------------------------------------------------------
@@ -1836,12 +2047,12 @@ function spawnAllCarsInLine(fX, fY, fZ, fRot) {
 // ----------------------------------------------------------------------------
 
 function getVehicleFreeDataSlot() {
-	local iLastSlot = iniGetParam("data/indexlist.ini", "iVehicleDataID", "0");
+	local iLastSlot = iniGetParam("data\\indexlist.ini", "iVehicleDataID", "0");
 	
 	iLastSlot = iLastSlot.tointeger();
 	iLastSlot = iLastSlot + 1;
 	
-	iniSetParam("data/indexlist.ini", "iVehicleDataID", iLastSlot.tostring());
+	iniSetParam("data\\indexlist.ini", "iVehicleDataID", iLastSlot.tostring());
 	
 	return iLastSlot;
 }
@@ -1849,12 +2060,12 @@ function getVehicleFreeDataSlot() {
 // ----------------------------------------------------------------------------
 
 function getPayPhoneFreeDataSlot() {
-	local iLastSlot = iniGetParam("data/indexlist.ini", "iPayPhoneDataID", "0");
+	local iLastSlot = iniGetParam("data\\indexlist.ini", "iPayPhoneDataID", "0");
 	
 	iLastSlot = iLastSlot.tointeger();
 	iLastSlot = iLastSlot + 1;
 	
-	iniSetParam("data/indexlist.ini", "iPayPhoneDataID", iLastSlot.tostring());
+	iniSetParam("data\\indexlist.ini", "iPayPhoneDataID", iLastSlot.tostring());
 	
 	return iLastSlot;
 }
@@ -1862,12 +2073,12 @@ function getPayPhoneFreeDataSlot() {
 // ----------------------------------------------------------------------------
 
 function getAccountFreeDataSlot() {
-	local iLastSlot = iniGetParam("data/indexlist.ini", "iAccountDataID", "0");
+	local iLastSlot = iniGetParam("data\\indexlist.ini", "iAccountDataID", "0");
 	
 	iLastSlot = iLastSlot.tointeger();
 	iLastSlot = iLastSlot + 1;
 	
-	iniSetParam("data/indexlist.ini", "iAccountDataID", iLastSlot.tostring());
+	iniSetParam("data\\indexlist.ini", "iAccountDataID", iLastSlot.tostring());
 	
 	return iLastSlot;
 }
@@ -1875,12 +2086,12 @@ function getAccountFreeDataSlot() {
 // ----------------------------------------------------------------------------
 
 function getFactionFreeDataSlot() {
-	local iLastSlot = iniGetParam("data/indexlist.ini", "iFactionDataID", "0");
+	local iLastSlot = iniGetParam("data\\indexlist.ini", "iFactionDataID", "0");
 	
 	iLastSlot = iLastSlot.tointeger();
 	iLastSlot = iLastSlot + 1;
 	
-	iniSetParam("data/indexlist.ini", "iFactionDataID", iLastSlot.tostring());
+	iniSetParam("data\\indexlist.ini", "iFactionDataID", iLastSlot.tostring());
 	
 	return iLastSlot;
 }
@@ -1894,7 +2105,7 @@ function addVehicleToDatabase(iVehicleID) {
 	local iVehicleDataID = getVehicleFreeDataSlot();
 	
 	VehicleDataID[iVehicleID] <- iVehicleDataID;
-	iniCreateFile("data/vehicles/" + iVehicleDataID + ".ini");
+	iniCreateFile("data\\vehicles\\" + iVehicleDataID + ".ini");
 	
 	saveVehicleToDatabase(iVehicleID);
 }
@@ -1903,8 +2114,8 @@ function addVehicleToDatabase(iVehicleID) {
 
 function addPayPhoneToDatabase(iPayPhoneID) {
 	local iPayPhoneDataID = getPayPhoneFreeDataSlot();
-	if(!iniFileExists("data/payphones/" + iPayPhoneDataID + ".ini")) {
-		iniCreateFile("data/payphones/" + iPayPhoneDataID + ".ini");
+	if(!iniFileExists("data\\payphones\\" + iPayPhoneDataID + ".ini")) {
+		iniCreateFile("data\\payphones\\" + iPayPhoneDataID + ".ini");
 		PayPhones[iPayPhoneID].iDataID = iPayPhoneDataID;
 	}
 	
@@ -1914,17 +2125,17 @@ function addPayPhoneToDatabase(iPayPhoneID) {
 // ----------------------------------------------------------------------------
 
 function removeVehicleFromDatabase(iVehicleID) {
-	iniSetParam("data/vehicles/" + VehicleDataID[iVehicleID]+ ".ini", "bDeleted", "1");
+	iniSetParam("data\\vehicles\\" + VehicleDataID[iVehicleID]+ ".ini", "bDeleted", "1");
 }
 
 // ----------------------------------------------------------------------------
 
 function loadVehiclesFromDatabase() {
-	local iVehicleCount = iniGetParam("data/indexlist.ini", "iVehicleDataID", "0");
+	local iVehicleCount = iniGetParam("data\\indexlist.ini", "iVehicleDataID", "0");
 	iVehicleCount = iVehicleCount.tointeger();
 	
 	for(local i = 1 ; i <= iVehicleCount ; i++) {
-		if(iniFileExists("data/vehicles/" + i + ".ini")) {
+		if(iniFileExists("data\\vehicles\\" + i + ".ini")) {
 			loadVehicleFromDatabase(i);
 		}
 	}	 
@@ -1933,11 +2144,11 @@ function loadVehiclesFromDatabase() {
 // ----------------------------------------------------------------------------
 
 function loadPayPhonesFromDatabase() {
-	local iPayPhoneCount = iniGetParam("data/indexlist.ini", "iPayPhoneDataID", "0");
+	local iPayPhoneCount = iniGetParam("data\\indexlist.ini", "iPayPhoneDataID", "0");
 	iPayPhoneCount = iPayPhoneCount.tointeger();
 	
 	for(local i = 1 ; i <= iPayPhoneCount ; i++) {
-		if(iniFileExists("data/payphones/" + i + ".ini")) {
+		if(iniFileExists("data\\payphones\\" + i + ".ini")) {
 			loadPayPhoneFromDatabase(i);
 		}
 	}	 
@@ -1946,24 +2157,24 @@ function loadPayPhonesFromDatabase() {
 // ----------------------------------------------------------------------------
 
 function loadVehicleFromDatabase(iVehicleDataID) {
-	local bDeleted = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "bDeleted", "0"); 
+	local bDeleted = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "bDeleted", "0"); 
 	
 	if(bDeleted.tointeger() == 0) {
-		local iModelID	 = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iModelID", "0");
-		local fSavedPosX = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedPosX", "0.0");
-		local fSavedPosY = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedPosY", "0.0");
-		local fSavedPosZ = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedPosZ", "0.0");
-		local fSavedRotX = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedRotX", "0.0");
-		local fSavedRotY = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedRotY", "0.0");
-		local fSavedRotZ = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedRotZ", "0.0");
-		local iOwnerID	 = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iOwnerID", "0");
-		local iOwnerType = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iOwnerType", "0");	 
-		local iBuyPrice	 = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iBuyPrice", "0");
-		local iRentPrice = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iRentPrice", "0");	  
-		local iRadioID	 = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iRadioID", "0");	
-		local bSavedPosLock = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "bSavedPosLock", "0");  
-		local iDMVRegistrationID = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "iDMVRegistrationID", "0");	
-		local bHasSiren = iniGetParam("data/vehicles/" + iVehicleDataID + ".ini", "bHasSiren", "0");	
+		local iModelID	 = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iModelID", "0");
+		local fSavedPosX = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedPosX", "0.0");
+		local fSavedPosY = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedPosY", "0.0");
+		local fSavedPosZ = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedPosZ", "0.0");
+		local fSavedRotX = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedRotX", "0.0");
+		local fSavedRotY = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedRotY", "0.0");
+		local fSavedRotZ = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedRotZ", "0.0");
+		local iOwnerID	 = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iOwnerID", "0");
+		local iOwnerType = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iOwnerType", "0");	 
+		local iBuyPrice	 = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iBuyPrice", "0");
+		local iRentPrice = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iRentPrice", "0");	  
+		local iRadioID	 = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iRadioID", "0");	
+		local bSavedPosLock = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "bSavedPosLock", "0");  
+		local iDMVRegistrationID = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iDMVRegistrationID", "0");	
+		local bHasSiren = iniGetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "bHasSiren", "0");	
 		
 		local iVehicleID = vehicleSpawn(iModelID.tointeger(), fSavedPosX.tofloat(), fSavedPosY.tofloat(), fSavedPosZ.tofloat(), fSavedRotX.tofloat(), fSavedRotY.tofloat(), fSavedRotZ.tofloat());
 		VehicleData[iVehicleID]<- { };	 
@@ -1987,16 +2198,16 @@ function loadVehicleFromDatabase(iVehicleDataID) {
 // ----------------------------------------------------------------------------
 
 function loadPayPhoneFromDatabase(iPayPhoneDataID) {
-	local bDeleted = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "bDeleted", "0"); 
+	local bDeleted = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "bDeleted", "0"); 
 	
 	if(bDeleted.tointeger() == 0) {
-		local iCallNumber  = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "iCallNumber", "0");
-		local fPositionX = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "fPositionX", "0.0");
-		local fPositionY = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "fPositionY", "0.0");
-		local fPositionZ = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "fPositionZ", "0.0");
-		//local bDeleted = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "bDeleted", "0");
-		local bDisabled = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "bDisabled", "0");
-		local bBroken = iniGetParam("data/payphones/" + iPayPhoneDataID + ".ini", "bBroken", "0");	
+		local iCallNumber  = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "iCallNumber", "0");
+		local fPositionX = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "fPositionX", "0.0");
+		local fPositionY = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "fPositionY", "0.0");
+		local fPositionZ = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "fPositionZ", "0.0");
+		//local bDeleted = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "bDeleted", "0");
+		local bDisabled = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "bDisabled", "0");
+		local bBroken = iniGetParam("data\\payphones\\" + iPayPhoneDataID + ".ini", "bBroken", "0");	
 		
 		//print(fPositionX.tofloat());		
 		
@@ -2033,37 +2244,37 @@ function saveVehicleToDatabase(iVehicleID) {
 	
 	local iVehicleDataID = VehicleDataID[iVehicleID];
 	
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "iModelID", VehicleData[iVehicleID].iModelID.tostring());
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iModelID", VehicleData[iVehicleID].iModelID.tostring());
 	
 	if(VehicleData[iVehicleID].bSavedPosLock == 0) {
-		iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedPosX", pos[0].tostring());
-		iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedPosY", pos[1].tostring());
-		iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedPosZ", pos[2].tostring());
-		iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedRotX", rot[0].tostring());
-		iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedRotY", rot[1].tostring());
-		iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "fSavedRotZ", rot[2].tostring());	 
+		iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedPosX", pos[0].tostring());
+		iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedPosY", pos[1].tostring());
+		iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedPosZ", pos[2].tostring());
+		iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedRotX", rot[0].tostring());
+		iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedRotY", rot[1].tostring());
+		iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "fSavedRotZ", rot[2].tostring());	 
 	}
 	
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "iOwnerType", VehicleData[iVehicleID].iOwnerType.tostring());	
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "iOwnerID", VehicleData[iVehicleID].iOwnerID.tostring());	 
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "bLocked", "0");
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "iRentPrice", VehicleData[iVehicleID].iRentPrice.tostring());
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "iBuyPrice", VehicleData[iVehicleID].iBuyPrice.tostring());	   
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "bSavedPosLock", VehicleData[iVehicleID].bSavedPosLock.tostring());
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "iDMVRegistrationID", VehicleData[iVehicleID].iDMVRegistrationID.tostring());
-	iniSetParam("data/vehicles/" + iVehicleDataID + ".ini", "bHasSiren", VehicleData[iVehicleID].bHasSiren.tostring());	
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iOwnerType", VehicleData[iVehicleID].iOwnerType.tostring());	
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iOwnerID", VehicleData[iVehicleID].iOwnerID.tostring());	 
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "bLocked", "0");
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iRentPrice", VehicleData[iVehicleID].iRentPrice.tostring());
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iBuyPrice", VehicleData[iVehicleID].iBuyPrice.tostring());	   
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "bSavedPosLock", VehicleData[iVehicleID].bSavedPosLock.tostring());
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "iDMVRegistrationID", VehicleData[iVehicleID].iDMVRegistrationID.tostring());
+	iniSetParam("data\\vehicles\\" + iVehicleDataID + ".ini", "bHasSiren", VehicleData[iVehicleID].bHasSiren.tostring());	
 }
 
 // ----------------------------------------------------------------------------
 
 function savePayPhoneToDatabase(iPayPhoneID) {
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "iCallNumber", PayPhones[iPayPhoneID].iCallNumber.tostring());	
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "fPositionX", PayPhones[iPayPhoneID].fPositionX.tostring());	   
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "fPositionY", PayPhones[iPayPhoneID].fPositionY.tostring());
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "fPositionZ", PayPhones[iPayPhoneID].fPositionZ.tostring());
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "bBroken", PayPhones[iPayPhoneID].bBroken.tostring());
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "bDisabled", PayPhones[iPayPhoneID].bDisabled.tostring());
-	iniSetParam("data/payphones/" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "iPricePerMinute", PayPhones[iPayPhoneID].iPricePerMinute.tostring());	 
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "iCallNumber", PayPhones[iPayPhoneID].iCallNumber.tostring());	
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "fPositionX", PayPhones[iPayPhoneID].fPositionX.tostring());	   
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "fPositionY", PayPhones[iPayPhoneID].fPositionY.tostring());
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "fPositionZ", PayPhones[iPayPhoneID].fPositionZ.tostring());
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "bBroken", PayPhones[iPayPhoneID].bBroken.tostring());
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "bDisabled", PayPhones[iPayPhoneID].bDisabled.tostring());
+	iniSetParam("data\\payphones\\" + PayPhones[iPayPhoneID].iDataID.tostring() + ".ini", "iPricePerMinute", PayPhones[iPayPhoneID].iPricePerMinute.tostring());	 
 }
 
 // ----------------------------------------------------------------------------
@@ -2071,19 +2282,19 @@ function savePayPhoneToDatabase(iPayPhoneID) {
 function addPlayerToDatabase(iPlayerID) {
 	local iAccountID = getAccountFreeDataSlot();
 	
-	iniCreateFile("data/accounts/" + iAccountID + ".ini");
+	iniCreateFile("data\\accounts\\" + iAccountID + ".ini");
 	
 	PlayerData[iPlayerID].iAccountID <- iAccountID;
 	
-	iniSetParam("data/accountlist.ini", getDataSafeName(playerGetName(iPlayerID)), iAccountID.tostring());
+	iniSetParam("data\\accountlist.ini", getDataSafeName(playerGetName(iPlayerID)), iAccountID.tostring());
 	
 	savePlayerToDatabase(iPlayerID);
 	
-	iniSetParam("data/accounts/" + iAccountID + ".ini", "iRegisteredUnixTS", time().tostring());
-	iniSetParam("data/accounts/" + iAccountID + ".ini", "fSavedPosX", GlobalConfig.NewCharacter.fSpawnX.tostring());
-	iniSetParam("data/accounts/" + iAccountID + ".ini", "fSavedPosY", GlobalConfig.NewCharacter.fSpawnY.tostring());
-	iniSetParam("data/accounts/" + iAccountID + ".ini", "fSavedPosZ", GlobalConfig.NewCharacter.fSpawnZ.tostring());	
-	iniSetParam("data/accounts/" + iAccountID + ".ini", "fSavedRotA", "0.0");
+	iniSetParam("data\\accounts\\" + iAccountID + ".ini", "iRegisteredUnixTS", time().tostring());
+	iniSetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedPosX", GlobalConfig.NewCharacter.fSpawnX.tostring());
+	iniSetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedPosY", GlobalConfig.NewCharacter.fSpawnY.tostring());
+	iniSetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedPosZ", GlobalConfig.NewCharacter.fSpawnZ.tostring());	
+	iniSetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedRotA", "0.0");
 	
 	savePlayerToDatabase(iPlayerID);
 }
@@ -2102,29 +2313,29 @@ function savePlayerToDatabase(iPlayerID) {
 		local pos = playerGetPosition(iPlayerID);
 		local rot = playerGetRotation(iPlayerID);
 		
-		iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedPosX", pos[0].tostring());
-		iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedPosY", pos[1].tostring());
-		iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedPosZ", pos[2].tostring());	   
-		iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedRotA", rot.tostring());		   
+		iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedPosX", pos[0].tostring());
+		iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedPosY", pos[1].tostring());
+		iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedPosZ", pos[2].tostring());	   
+		iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "fSavedRotA", rot.tostring());		   
 	}
 	
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "szPlayerName", playerGetName(iPlayerID));
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "szPassword", PlayerData[iPlayerID].szPassword); 
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "iStaffFlags", PlayerData[iPlayerID].iStaffFlags.tostring());
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "szLastIP", playerGetIP(iPlayerID));
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "iSkinID", playerGetSkinID(iPlayerID).tostring());
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "iMoney", playerGetMoney(iPlayerID).tostring());
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "iFactionID", PlayerData[iPlayerID].iFactionID.tostring());
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "iAccountSettings", PlayerData[iPlayerID].iAccountSettings.tostring());
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "iGameSettings", PlayerData[iPlayerID].iGameSettings.tostring());
-	iniSetParam("data/accounts/" + PlayerData[iPlayerID].iAccountID + ".ini", "fFieldOfView", PlayerData[iPlayerID].fFOV.tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "szPlayerName", playerGetName(iPlayerID));
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "szPassword", PlayerData[iPlayerID].szPassword); 
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "iStaffFlags", PlayerData[iPlayerID].iStaffFlags.tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "szLastIP", playerGetIP(iPlayerID));
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "iSkinID", playerGetSkinID(iPlayerID).tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "iMoney", playerGetMoney(iPlayerID).tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "iFactionID", PlayerData[iPlayerID].iFactionID.tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "iAccountSettings", PlayerData[iPlayerID].iAccountSettings.tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "iGameSettings", PlayerData[iPlayerID].iGameSettings.tostring());
+	iniSetParam("data\\accounts\\" + PlayerData[iPlayerID].iAccountID + ".ini", "fFieldOfView", PlayerData[iPlayerID].fFOV.tostring());
 	return true;
 }
 
 // ----------------------------------------------------------------------------
 
 function isPlayerRegistered(iPlayerID) {
-	local iAccountID = iniGetParam("data/accountlist.ini", getDataSafeName(playerGetName(iPlayerID)), "-1");
+	local iAccountID = iniGetParam("data\\accountlist.ini", getDataSafeName(playerGetName(iPlayerID)), "-1");
 	
 	iAccountID = iAccountID.tointeger();
 	
@@ -2136,7 +2347,7 @@ function isPlayerRegistered(iPlayerID) {
 		return false;
 	}
 	
-	if(!iniFileExists("data/accounts/" + iAccountID + ".ini")) {
+	if(!iniFileExists("data\\accounts\\" + iAccountID + ".ini")) {
 		return false;
 	}
 	
@@ -2146,7 +2357,7 @@ function isPlayerRegistered(iPlayerID) {
 // ----------------------------------------------------------------------------
 
 function loadPlayerFromDatabase(iPlayerID) {
-	local iAccountID = iniGetParam("data/accountlist.ini", getDataSafeName(playerGetName(iPlayerID)), "-1");
+	local iAccountID = iniGetParam("data\\accountlist.ini", getDataSafeName(playerGetName(iPlayerID)), "-1");
 	
 	if(!iAccountID) {
 		return false;
@@ -2158,27 +2369,27 @@ function loadPlayerFromDatabase(iPlayerID) {
 		return false;
 	}
 	
-	if(!iniFileExists("data/accounts/" + iAccountID + ".ini")) {
+	if(!iniFileExists("data\\accounts\\" + iAccountID + ".ini")) {
 		return false;
 	}
 	
 	PlayerData[iPlayerID].iAccountID <- iAccountID;
 	
-	local fPosX = iniGetParam("data/accounts/" + iAccountID + ".ini", "fSavedPosX", GlobalConfig.NewCharacter.fSpawnX.tostring());
-	local fPosY = iniGetParam("data/accounts/" + iAccountID + ".ini", "fSavedPosY", GlobalConfig.NewCharacter.fSpawnY.tostring());
-	local fPosZ = iniGetParam("data/accounts/" + iAccountID + ".ini", "fSavedPosZ", GlobalConfig.NewCharacter.fSpawnZ.tostring());
-	local fRotA = iniGetParam("data/accounts/" + iAccountID + ".ini", "fSavedRotA", "0.0");
-	local iStaffFlags = iniGetParam("data/accounts/" + iAccountID + ".ini", "iStaffFlags", "0");
-	local szLastIP = iniGetParam("data/accounts/" + iAccountID + ".ini", "szLastIP", "unknown");
-	local iLastOnlineUnixTS = iniGetParam("data/accounts/" + iAccountID + ".ini", "iLastOnlineUnixTS", "-1");
-	local iRegisterUnixTS = iniGetParam("data/accounts/" + iAccountID + ".ini", "iRegisteredUnixTS", "-1");
-	local szPassword = iniGetParam("data/accounts/" + iAccountID + ".ini", "szPassword", "unknown");
-	local iMoney = iniGetParam("data/accounts/" + iAccountID + ".ini", "iMoney", "0");
-	local iSkinID = iniGetParam("data/accounts/" + iAccountID + ".ini", "iSkinID", "0");
-	local iAccountSettings = iniGetParam("data/accounts/" + iAccountID + ".ini", "iAccountSettings", "0");
-	local iGameSettings = iniGetParam("data/accounts/" + iAccountID + ".ini", "iGameSettings", "0");
-	local iPublicJob = iniGetParam("data/accounts/" + iAccountID + ".ini", "iPublicJob", "0");
-	local fFOV = iniGetParam("data/accounts/" + iAccountID + ".ini", "fFieldOfView", "90.0");
+	local fPosX = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedPosX", GlobalConfig.NewCharacter.fSpawnX.tostring());
+	local fPosY = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedPosY", GlobalConfig.NewCharacter.fSpawnY.tostring());
+	local fPosZ = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedPosZ", GlobalConfig.NewCharacter.fSpawnZ.tostring());
+	local fRotA = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "fSavedRotA", "0.0");
+	local iStaffFlags = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iStaffFlags", "0");
+	local szLastIP = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "szLastIP", "unknown");
+	local iLastOnlineUnixTS = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iLastOnlineUnixTS", "-1");
+	local iRegisterUnixTS = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iRegisteredUnixTS", "-1");
+	local szPassword = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "szPassword", "unknown");
+	local iMoney = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iMoney", "0");
+	local iSkinID = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iSkinID", "0");
+	local iAccountSettings = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iAccountSettings", "0");
+	local iGameSettings = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iGameSettings", "0");
+	local iPublicJob = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "iPublicJob", "0");
+	local fFOV = iniGetParam("data\\accounts\\" + iAccountID + ".ini", "fFieldOfView", "90.0");
 	
 	fPosX = fPosX.tofloat();
 	fPosY = fPosY.tofloat();
@@ -2220,7 +2431,7 @@ function loadPlayerFromDatabase(iPlayerID) {
 function saveAllPlayersToDatabase() {
 	for(local i = 0 ; i < serverGetMaxPlayers(); i++) {
 		if(playerIsConnected(i)) {
-			if(!iniFileExists("data/accounts/" + PlayerData[i].iAccountID + ".ini")) {
+			if(!iniFileExists("data\\accounts\\" + PlayerData[i].iAccountID + ".ini")) {
 				addPlayerToDatabase(i);
 			}
 			
@@ -2275,7 +2486,7 @@ function playerRestoreSavedWeapons(iPlayerID) {
 // ----------------------------------------------------------------------------
 
 function loginSuccess(iPlayerID) {
-	PlayerData[iPlayerID].bLoggedIn <- true;
+	PlayerData[iPlayerID].bLoggedIn = true;
 	//playerRestoreSavedPosition(iPlayerID);
 	//playerRestoreSavedRotation(iPlayerID);
 	//playerRestoreSavedSkin(iPlayerID);
@@ -2302,6 +2513,16 @@ function checkSpawnRestoreCooldown() {
 			}
 		}
 	}
+}
+
+// ----------------------------------------------------------------------------
+
+function getSecondsText(iSeconds) {
+	if(iSeconds == 1) {
+		return "1 second";
+	}
+	
+	return iSeconds + " seconds";
 }
 
 // ----------------------------------------------------------------------------
@@ -2417,7 +2638,7 @@ function getOnlineAdmins() {
 				if(PlayerData[i].bLoggedIn) {
 					temp_admins[i]<-  { };
 					temp_admins[i].szPlayerName <- playerGetName(i);
-					temp_admins[i].szStaffTitle <- iniGetParam("data/stafftitles.ini", getDataSafeName(playerGetName(i)), "Unknown");
+					temp_admins[i].szStaffTitle <- iniGetParam("data\\stafftitles.ini", getDataSafeName(playerGetName(i)), "Unknown");
 				}
 			}
 		}
@@ -2429,15 +2650,15 @@ function getOnlineAdmins() {
 // ----------------------------------------------------------------------------
 
 function loadGlobalConfig() {
-	GlobalConfig.fVehicleSpawnDistance <- iniGetParam("data/globalconfig.ini", "fVehicleSpawnDistance", "5.0").tofloat();
-	GlobalConfig.fVehicleTrunkDistance <- iniGetParam("data/globalconfig.ini", "fVehicleTrunkDistance", "3.0").tofloat();
-	GlobalConfig.NewCharacter.iAccountSettings <- iniGetParam("data/globalconfig.ini", "iDefaultAccountSettings", "0").tointeger();
-	GlobalConfig.NewCharacter.iStaffFlags <- iniGetParam("data/globalconfig.ini", "iDefaultStaffFlags", "0").tointeger();
-	GlobalConfig.NewCharacter.fFOV <- iniGetParam("data/globalconfig.ini", "fDefaultFieldOfView", "90.0").tofloat();
-	GlobalConfig.NewCharacter.iGameSettings <- iniGetParam("data/globalconfig.ini", "iDefaultGameSettings", "0").tointeger();
-	GlobalConfig.szServerName <- iniGetParam("data/globalconfig.ini", "szServerName", "Unknown").tostring();
-	GlobalConfig.bRaining <- iniGetParam("data/globalconfig.ini", "bRaining", "0").tointeger();
-	GlobalConfig.bNight <- iniGetParam("data/globalconfig.ini", "bNight", "0").tointeger();
+	GlobalConfig.fVehicleSpawnDistance <- iniGetParam("data\\globalconfig.ini", "fVehicleSpawnDistance", "5.0").tofloat();
+	GlobalConfig.fVehicleTrunkDistance <- iniGetParam("data\\globalconfig.ini", "fVehicleTrunkDistance", "3.0").tofloat();
+	GlobalConfig.NewCharacter.iAccountSettings <- iniGetParam("data\\globalconfig.ini", "iDefaultAccountSettings", "0").tointeger();
+	GlobalConfig.NewCharacter.iStaffFlags <- iniGetParam("data\\globalconfig.ini", "iDefaultStaffFlags", "0").tointeger();
+	GlobalConfig.NewCharacter.fFOV <- iniGetParam("data\\globalconfig.ini", "fDefaultFieldOfView", "90.0").tofloat();
+	GlobalConfig.NewCharacter.iGameSettings <- iniGetParam("data\\globalconfig.ini", "iDefaultGameSettings", "0").tointeger();
+	GlobalConfig.szServerName <- iniGetParam("data\\globalconfig.ini", "szServerName", "Unknown").tostring();
+	GlobalConfig.bRaining <- iniGetParam("data\\globalconfig.ini", "bRaining", "0").tointeger();
+	GlobalConfig.bNight <- iniGetParam("data\\globalconfig.ini", "bNight", "0").tointeger();
 }
 
 // ----------------------------------------------------------------------------
@@ -2690,6 +2911,18 @@ function checkPayPhoneCallers() {
 	}	
 }
 
+// ---------------------------------------------------------------------------
+
+function playSoundForPlayersInArea(szSoundName, fPositionX, fPositionZ, fDistance) {
+	local theirPos;
+	foreach(ii,iv in onlinePlayers) {
+		theirPos = playerGetPosition(iv);
+		if(getDistance(theirPos[0], theirPos[2], fPositionX, fPositionZ) <= fDistance) {
+			playerPlaySound(iv, szSoundName);
+		}
+	}
+}
+
 // ----------------------------------------------------------------------------
 
 function playerAnswerPayPhone(iPlayerID, pPayPhone, pCallerPhone) {
@@ -2880,7 +3113,7 @@ function addLeadingZeros(iNumber, iTotalDigits) {
 
 function operatorLineDoesNotExist(iPlayerID) {	
 	playerMessageAlert(iPlayerID, "Somebody answered the phone.");	
-	sendPlayerMessage(iPlayerID, Colours.Gray25 + "(Operator): The number you have dialed doesn't exist");
+	sendPlayerMessage(iPlayerID, Colours.Gray25 + " (operator): The number you have dialed doesn't exist");
 	
 	playerMessageAlert(iPlayerID, "The other person hung up.");	
 	playerAction(iPlayerID, "hangs up the phone.");
@@ -2979,3 +3212,5 @@ function hasBitFlag(checkThis, checkFor) {
 function getDataSafeName(szName) {
 	return szName;
 }
+
+// ----------------------------------------------------------------------------
